@@ -13,13 +13,7 @@ const seedDB = () => {
   seedHostels(() => {
     seedUsers(() => {
       seedReviews(() => {
-        db.connection.query('SELECT * FROM REVIEWS', (err, res) => {
-          if (err) {
-            console.log('ERROR IN REVIEW QUERY', err);
-          } else {
-            console.log(res.length);
-          }
-        })
+        console.log('DB seeded');
       })
     })
   })
@@ -88,7 +82,3 @@ const seedReviews = (callback) => {
     }
   }
 };
-
-
-
-seedDB();
