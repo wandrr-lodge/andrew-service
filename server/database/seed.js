@@ -5,9 +5,9 @@ const reviewDescriptions = ['Lorem ipsum dolor sit amet, consectetur adipiscing 
 
 const usernames = ['rubberyfrantic', 'hankeringdispatch', 'skierlevers', 'quarterdeckbart', 'vowedpneumonia', 'charcoalserjeant', 'headbandtuolumne', 'whamlacombe', 'attendherbs', 'measurestire', 'lashedcrowded', 'quicklimevictory', 'boundedmullet', 'abaftintranets', 'basischildren', 'milkshakesfunction', 'jollybroil', 'yeahllynfi', 'auspiciousamino', 'bipingways', 'drateworthy', 'bubbedgrubble', 'myselfgoods', 'potablecollagen', 'tabletpointers', 'BenChasin', 'RyanZigler', 'EvanKolb', 'StevenTrager', 'kongaiwen'];
 
-const userdescriptions = ['Globetrotter', 'Avid Traveller', 'Novice Nomad'];
+const userDescriptions = ['Globetrotter', 'Avid Traveller', 'Novice Nomad'];
 
-const userages = [1, 2, 3, 4];
+const userAges = [1, 2, 3, 4];
 
 const seedDB = () => {
   seedHostels(() => {
@@ -23,12 +23,12 @@ const seedUsers = (callback) => {
   let count = 0;
   for (let i = 0; i < 30; i++) {
     let name = usernames[i];
-    let ageIdx = Math.floor(Math.random() * 4);
-    let age = userages[ageIdx];
-    let descIdx = Math.floor(Math.random() * 3);
-    let desc = userdescriptions[descIdx];
-    let imgIdx = Math.ceil(Math.random() * 5);
-    let img = `server/database/images/img${imgIdx}.jpg`;
+    let ageIndex = Math.floor(Math.random() * 4);
+    let age = userages[ageIndex];
+    let descIndex = Math.floor(Math.random() * 3);
+    let desc = userdescriptions[descIndex];
+    let imgIndex = Math.ceil(Math.random() * 5);
+    let img = `server/database/images/img${imgIndex}.jpg`;
     let queryStr = `INSERT INTO authors (description, name, age_group, picture_url) VALUES ("${desc}", "${name}", "${age}", "${img}")`;
     db.connection.query(queryStr, (err, res) => {
       if (err) {
