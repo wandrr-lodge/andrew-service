@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   facilities INT NOT NULL,
   value INT NOT NULL,
   total INT NOT NULL,
+  created_at DATE NOT NULL,
   FOREIGN KEY (hostel_id) REFERENCES hostels(id),
   FOREIGN KEY (author_id) REFERENCES authors(id)
 )
