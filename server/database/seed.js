@@ -29,5 +29,19 @@ const seedUsers = (callback) => {
       }
     })
   }
+};
+
+const seedHostels = (callback) => {
+  let count = 0;
+  for (let i = 1; i <= 100; i++) {
+    let queryStr = `INSERT INTO hostels (hostel_name) VALUES ("Hostile${i}")`;
+    db.connection.query(queryStr, (err, res) => {
+      if (err) {
+        console.log('ERROR IN AUTHOR SEEDING', err);
+      } else {
+        count === 99 ? callback() : count++;
+      }
+    })
+  }
 }
-seedUsers(() => { console.log('worked'); });
+
