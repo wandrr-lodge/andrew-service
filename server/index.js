@@ -16,7 +16,7 @@ app.get('/api/reviews', (req, res) => {
   if (hostelId === undefined) {
     res.end();
   } else {
-    let queryStr = `SELECT * FROM reviews WHERE hostel_id = ${hostelId}`;
+    let queryStr = `SELECT * FROM reviews, authors WHERE reviews.hostel_id = ${hostelId}`;
     db.connection.query(queryStr, (err, response) => {
       if (err) {
         console.log(err);

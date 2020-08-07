@@ -82,3 +82,6 @@ const seedReviews = (callback) => {
     }
   }
 };
+
+
+seedDB();
