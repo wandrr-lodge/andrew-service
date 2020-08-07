@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('./database/db.js')
+const db = require('./database/db.js');
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.get('/api/reviews', (req, res) => {
   if (hostelId === undefined) {
     res.end();
   } else {
-    let queryStr = `SELECT * FROM reviews, authors WHERE reviews.hostel_id = ${hostelId}`;
+    const queryStr = `SELECT * FROM reviews, authors WHERE reviews.hostel_id = ${hostelId}`;
     db.connection.query(queryStr, (err, response) => {
       if (err) {
         console.log(err);
@@ -24,9 +24,8 @@ app.get('/api/reviews', (req, res) => {
       } else {
         res.json(response);
       }
-    })
+    });
   }
-})
-
+});
 
 app.listen(3001, () => console.log('listening on 3001'));
