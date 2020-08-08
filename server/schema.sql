@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS hostels (
 
 CREATE TABLE IF NOT EXISTS authors (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  description VARCHAR(64),
+  authdescription VARCHAR(64),
   name VARCHAR(64) UNIQUE,
   age_group INT,
   picture_url TEXT
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS reviews (
   cleanliness INT NOT NULL,
   facilities INT NOT NULL,
   value INT NOT NULL,
-  total INT NOT NULL,
+  total DECIMAL(4,2) NOT NULL,
   created_at DATE NOT NULL,
   FOREIGN KEY (hostel_id) REFERENCES hostels(id),
   FOREIGN KEY (author_id) REFERENCES authors(id)
-)
+);
 

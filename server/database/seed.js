@@ -19,7 +19,7 @@ const seedUsers = (callback) => {
     const desc = userDescriptions[descIndex];
     const imgIndex = Math.ceil(Math.random() * 5);
     const img = `server/database/images/img${imgIndex}.jpg`;
-    const queryStr = `INSERT INTO authors (description, name, age_group, picture_url) VALUES ("${desc}", "${name}", "${age}", "${img}")`;
+    const queryStr = `INSERT INTO authors (authdescription, name, age_group, picture_url) VALUES ("${desc}", "${name}", "${age}", "${img}")`;
     db.connection.query(queryStr, (err) => {
       if (err) {
         console.log('ERROR IN AUTHOR SEEDING', err);

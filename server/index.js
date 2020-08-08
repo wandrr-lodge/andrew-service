@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-let hostelId;
+let hostelId = 1;
 
 app.post('/api/reviews', (req, res) => {
   hostelId = req.body.id;
@@ -16,7 +16,7 @@ app.get('/api/reviews', (req, res) => {
   if (hostelId === undefined) {
     res.end();
   } else {
-    const queryStr = `SELECT * FROM reviews, authors WHERE reviews.hostel_id = ${hostelId}`;
+    const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id WHERE reviews.hostel_id = ${hostelId}`;
     db.connection.query(queryStr, (err, response) => {
       if (err) {
         console.log(err);
