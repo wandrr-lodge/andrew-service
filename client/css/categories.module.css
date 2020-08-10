@@ -1,0 +1,12 @@
+.bar {
+  display: block;
+  background-color: #f25621;
+  height: 100%;
+
+}
+.rating {
+  width: 100%;
+  background-color: #f1f1f1;
+  height: .25rem;
+  border-radius: .25rem;
+}
