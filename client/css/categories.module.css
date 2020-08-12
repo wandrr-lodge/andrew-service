@@ -1,0 +1,47 @@
+.bar {
+  display: block;
+  background-color: #f25621;
+  height: 100%;
+
+}
+.rating {
+  width: 100%;
+  background-color: #f1f1f1;
+  height: .25rem;
+  border-radius: .25rem;
+}
+
+.categoriesGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-column-gap: 2rem;
+  grid-column-start: 1;
+  padding-left: 0;
+
+}
+
+.categoriesText {
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.categoryRating {
+  margin-bottom: 10px;
+}
+
+.categoryName {
+  color: #31363f;
+  font-size: 12px;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+  margin-bottom: 5px;
+}
+
+.categoryScore {
+  color: #31363f;
+  font-size: 12px;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
