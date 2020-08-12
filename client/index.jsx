@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TotalScore from './modules/totalScore.jsx'
+import DefaultView from './modules/defaultView.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
       <div id="reviews-section">
         <div id="ratings">
-          <TotalScore score={13} word={'good'} reviews={null} />
+          <DefaultView />
         </div>
         <div id="latest-reviews"></div>
       </div>
