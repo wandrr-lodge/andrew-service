@@ -4,6 +4,7 @@ const db = require('./database/db.js');
 const app = express();
 
 app.use(express.json());
+app.use(express.static(__dirname + '/../public'));
 
 let hostelId = 1;
 
@@ -22,6 +23,7 @@ app.get('/api/reviews', (req, res) => {
         console.log(err);
         res.sendStatus(500);
       } else {
+        console.log('done');
         res.json(response);
       }
     });

@@ -8,20 +8,20 @@ class DefaultView extends React.Component {
     super(props);
   }
 
-
   render() {
+    console.log(this.props.word)
     return (
       <div className={styles.view}>
         <h4 className={styles.header}>Reviews & Ratings</h4>
-        <TotalScore score={9.1} word={'good'} reviews={45} />
+        <TotalScore score={this.props.reviews.total} word={this.props.word} reviews={this.props.count} />
         <Categories scores={[
-          { name: 'Security', score: 9.4 },
-          { name: 'Location', score: 9.9 },
-          { name: 'Staff', score: 9.2 },
-          { name: 'Atmosphere', score: 8.8 },
-          { name: 'Cleanliness', score: 8.9 },
-          { name: 'Facilities', score: 8.4 },
-          { name: 'Value For Money', score: 9.1 }
+          { name: 'Security', score: this.props.reviews.security },
+          { name: 'Location', score: this.props.reviews.location },
+          { name: 'Staff', score: this.props.reviews.staff },
+          { name: 'Atmosphere', score: this.props.reviews.atmosphere },
+          { name: 'Cleanliness', score: this.props.reviews.cleanliness },
+          { name: 'Facilities', score: this.props.reviews.facilities },
+          { name: 'Value For Money', score: this.props.reviews.value }
         ]} />
       </div>
     )

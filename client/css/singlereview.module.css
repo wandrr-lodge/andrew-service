@@ -1,0 +1,53 @@
+.outer {
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 16px;
+  border: 1px solid #f1f2f4;
+  border-radius: 8px;
+  min-height: 170px;
+  box-sizing: inherit;
+}
+
+.reviewtotal {
+  background-color: #f25621;
+  width: 35px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  display: flex;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.reviewdate {
+  display: flex;
+  font-size: 12px;
+  color: #636c7e;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+svg {
+  margin-right: 5px;
+}
+
+.reviewheader {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  align-items: center;
+}
+
+.reviewbody {
+  font-size: 12px;
+  color: #31363f;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+  box-sizing: inherit;
+}

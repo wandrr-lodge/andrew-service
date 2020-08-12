@@ -1,0 +1,31 @@
+.latest {
+  margin-bottom: 16px;
+  color: #31363f;
+  font-size: 24px;
+  font-weight: 400;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.view {
+  width: 70rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.modalbutton {
+  font-size: 14px;
+  padding: 8px 24px;
+  border: 1px solid #a9afbc;
+  border-radius: 5px;
+  background: white;
+  color: #31363f;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+  cursor: pointer;
+}
+
+.modalbutton:hover {
+  color: #f25621;
+  border: 1px solid #f25621;
+}
