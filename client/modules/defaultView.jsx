@@ -22,7 +22,7 @@ class DefaultView extends React.Component {
           { name: 'Cleanliness', score: this.props.reviews.cleanliness },
           { name: 'Facilities', score: this.props.reviews.facilities },
           { name: 'Value For Money', score: this.props.reviews.value }
-        ]} />
+        ]} style={{ "grid-template-columns": "repeat(4,1fr)" }}/>
       </div>
     )
   }
