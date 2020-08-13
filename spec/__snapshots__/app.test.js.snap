@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Should render and match snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`App Should render with dummy data 1`] = `ShallowWrapper {}`;
+
+exports[`Default View Should render and match snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`LatestReviews Should render and match snapshot 1`] = `ShallowWrapper {}`;

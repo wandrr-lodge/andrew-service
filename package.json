@@ -7,10 +7,33 @@
   "engines": {
     "node": ">=6.13.0"
   },
+  "jest": {
+    "verbose": false,
+    "setupFilesAfterEnv": [
+      "<rootDir>spec/setupTests.js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "client"
+    ],
+    "transform": {
+      "^.+\\.(js||jsx)$": "babel-jest",
+      "^.+\\.svg$": "jest-svg-transformer"
+    },
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/spec/stylemock.js"
+    },
+    "testURL": "http://localhost:3001"
+  },
   "scripts": {
     "build": "webpack -d --watch",
     "start": "nodemon server/index.js",
-    "seed": "node server/database/seed.js"
+    "seed": "node server/database/seed.js",
+    "test": "jest"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
@@ -19,6 +42,7 @@
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "jest": "^26.2.2",
+    "jest-svg-transformer": "^1.0.0",
     "moment": "^2.27.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",

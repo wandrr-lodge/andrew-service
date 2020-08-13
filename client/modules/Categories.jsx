@@ -8,7 +8,7 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <ul className={styles.categoriesGrid}>
+      <ul className={styles.categoriesGrid} style={this.props.style}>
         {this.props.scores.map((score) =>
         <ListItem obj={score} />
         )}

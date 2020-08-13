@@ -14,7 +14,7 @@
 .categoriesGrid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  /* grid-template-columns: repeat(4,1fr); */
   grid-column-gap: 2rem;
   grid-column-start: 1;
   padding-left: 0;

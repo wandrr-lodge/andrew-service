@@ -7,6 +7,7 @@ import LatestReviews from './modules/LatestReviews.jsx'
 // import { far } from '@fortawesome/free-solid-svg-icons'
 // import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 // library.add(far, faCalendarAlt);
+import ModalWindow from './modules/ModalWindow.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -129,4 +130,6 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+// ReactDOM.render(<App />, document.getElementById('app'));
+
+export default App;
