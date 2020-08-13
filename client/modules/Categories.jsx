@@ -6,11 +6,9 @@ class Categories extends React.Component {
     super(props)
   }
 
-
-
   render() {
     return (
-      <ul className={styles.categoriesGrid}>
+      <ul className={styles.categoriesGrid} style={this.props.style}>
         {this.props.scores.map((score) =>
         <ListItem obj={score} />
         )}
@@ -18,7 +16,6 @@ class Categories extends React.Component {
     )
   }
 };
-
 
 const ListItem = ({obj}) => {
   let css = {width: `${obj.score * 10}%`};
