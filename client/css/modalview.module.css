@@ -1,0 +1,78 @@
+.reviewbox {
+  padding: 24px 0;
+  border-bottom: 1px solid #f1f2f4;
+}
+
+.selection {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+  border-bottom: 1px solid #f1f2f4;
+}
+
+.numword {
+  font-size: 14px;
+  border-radius: 4px;
+  min-width: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+  transition: all .2s ease-in-out
+}
+
+.pageselector {
+  font-size: 14px;
+  border-radius: 4px;
+  min-width: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+  transition: all .2s ease-in-out
+}
+
+.arrow {
+  border-radius: 4px;
+  min-width: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  transition: all .2s ease-in-out
+}
+
+.numword:hover {
+  background-color: #f3f2f2;
+  color: #f25621;
+}
+
+.pageselector:hover {
+  background-color: #f3f3f3;
+  color: #f25621;
+}
+
+.arrow:hover {
+  background-color: #f3f3f3;
+  color: #f25621;
+}
+
+.selected {
+  font-size: 14px;
+  border-radius: 4px;
+  min-width: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  font-family: Noto,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+  transition: all .2s ease-in-out;
+  color: #f25621;
+  border: 1px solid #f25621;
+}
