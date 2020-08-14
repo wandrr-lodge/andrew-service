@@ -7,7 +7,9 @@ const usernames = ['rubberyfrantic', 'hankeringdispatch', 'skierlevers', 'quarte
 
 const userDescriptions = ['Globetrotter', 'Avid Traveller', 'Novice Nomad'];
 
-const userAges = [1, 2, 3, 4];
+const userAges = ['18-24', '25-30', '31-40', '41+'];
+
+const genders = ['Female', 'Male'];
 
 const seedUsers = (callback) => {
   let count = 0;
@@ -15,11 +17,13 @@ const seedUsers = (callback) => {
     const name = usernames[i];
     const ageIndex = Math.floor(Math.random() * 4);
     const age = userAges[ageIndex];
+    const genIdx = Math.floor(Math.random() * 2);
+    const gender = genders[genIdx];
     const descIndex = Math.floor(Math.random() * 3);
     const desc = userDescriptions[descIndex];
     const imgIndex = Math.ceil(Math.random() * 5);
     const img = `server/database/images/img${imgIndex}.jpg`;
-    const queryStr = `INSERT INTO authors (authdescription, name, age_group, picture_url) VALUES ("${desc}", "${name}", "${age}", "${img}")`;
+    const queryStr = `INSERT INTO authors (authdescription, name, gender, age_group, picture_url) VALUES ("${desc}", "${name}", "${gender}", "${age}",  "${img}")`;
     db.connection.query(queryStr, (err) => {
       if (err) {
         console.log('ERROR IN AUTHOR SEEDING', err);

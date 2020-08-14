@@ -3,6 +3,7 @@ import React from 'react';
 import TotalScore from './totalScore.jsx';
 import Arrow from './arrow-left-solid.svg';
 import Categories from './Categories.jsx';
+import ModalReviewView from './ModalReviewView.jsx'
 
 class ModalWindow extends React.Component {
   constructor(props) {
@@ -24,10 +25,10 @@ class ModalWindow extends React.Component {
 
   render() {
     console.log('mjodal')
-    console.log(this.props.display);
+    console.log(this.props.reviews);
     return (
       <div>
-        <button className={style.modalbutton} onClick={this.handleClick.bind(this)}>Read all reviews</button>
+        <button className={style.modalbutton} onClick={this.handleClick.bind(this)} style={{ display: this.props.buttonDisplay }}>Read all reviews</button>
         <div className={style.overlay} style={{ display: this.state.display }}>
           <div className={style.modal}>
             <div className={style.header}>
@@ -37,18 +38,21 @@ class ModalWindow extends React.Component {
               <h2>Reviews & Ratings</h2>
             </div>
             <div className={style.scores}>
-              <TotalScore score="9.1" word='Superb' reviews="30" />
+              <TotalScore score={this.props.averages.total} word={this.props.word} reviews={this.props.count} />
               <div className={style.grid}>
-                <Categories scores={[
-                { name: 'Security', score: 5 },
-                { name: 'Location', score: 7 },
-                { name: 'Staff', score: 3 },
-                { name: 'Atmosphere', score: 9 },
-                { name: 'Cleanliness', score: 5 },
-                { name: 'Facilities', score: 2 },
-                { name: 'Value For Money', score: 8 }
+              <Categories scores={[
+                { name: 'Security', score: this.props.averages.security },
+                { name: 'Location', score: this.props.averages.location },
+                { name: 'Staff', score: this.props.averages.staff },
+                { name: 'Atmosphere', score: this.props.averages.atmosphere },
+                { name: 'Cleanliness', score: this.props.averages.cleanliness },
+                { name: 'Facilities', score: this.props.averages.facilities },
+                { name: 'Value For Money', score: this.props.averages.value }
                 ]} style={{ "grid-template-columns": "repeat(2,1fr)" }}/>
               </div>
+            </div>
+            <div>
+              <ModalReviewView reviews={this.props.reviews} />
             </div>
           </div>
         </div>
