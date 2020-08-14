@@ -10,6 +10,7 @@ class DefaultView extends React.Component {
 
   render() {
     console.log(this.props.word)
+    console.log(this.props.reviews)
     return (
       <div className={styles.view}>
         <h4 className={styles.header}>Reviews & Ratings</h4>

@@ -25,6 +25,7 @@ class App extends React.Component {
         facilities: 5,
         hostel_id: 1,
         id: 1,
+        gender: 'Female',
         location: 3,
         name: "rubberyfrantic",
         picture_url: "server/database/images/img3.jpg",
@@ -116,12 +117,12 @@ class App extends React.Component {
     return (
       <div id="reviews-section">
         <div id="ratings">
-          <DefaultView reviews={this.state.averages} count={this.state.reviews.length} word={this.state.word}/>
+          <DefaultView reviews={this.state.averages} count={this.state.reviews.length} word={this.state.word} />
         </div>
         <div id="latest-reviews">
           {mounted
-          ? <LatestReviews reviews={this.state.topfour} />
-          : <LatestReviews reviews={this.state.dummyData} />
+          ? <LatestReviews topfour={this.state.topfour} reviews={this.state.reviews} averages={this.state.averages} count={this.state.reviews.length} word={this.state.word} />
+          : <LatestReviews topfour={this.state.dummyData} reviews={this.state.dummyData} averages={this.state.averages} count={this.state.reviews.length} word={this.state.word} />
           }
         </div>
       </div>
@@ -130,6 +131,6 @@ class App extends React.Component {
   }
 }
 
-// ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
 
 export default App;
