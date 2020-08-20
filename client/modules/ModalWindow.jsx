@@ -9,26 +9,43 @@ class ModalWindow extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      display: 'none'
+      display: 'none',
     }
   }
 
   handleClick(e) {
     e.preventDefault();
     let type;
-    this.state.display === 'none' ? type = 'block' : type = 'none'
+    if (this.state.display === 'none') {
+       type = 'block'
+       document.body.style.overflow = 'hidden'
+    } else {
+      type = 'none'
+      document.body.style.overflow = '';
+    }
     this.setState({
       display: type
     });
   }
 
 
+
+
   render() {
-    console.log('mjodal')
-    console.log(this.props.reviews);
+    let buttonStyle;
+    let innerStyle;
+
+    this.props.buttonStyle === 1
+    ? buttonStyle = style.modalbutton
+    : buttonStyle = style.navbutton
+
+    this.props.innerStyle === 1
+    ? innerStyle = 'inner'
+    : innerStyle = style.buttonInner
+
     return (
       <div>
-        <button className={style.modalbutton} onClick={this.handleClick.bind(this)} style={{ display: this.props.buttonDisplay }}>Read all reviews</button>
+        <button className={buttonStyle} onClick={this.handleClick.bind(this)} style={{ display: this.props.buttonDisplay }}><div className={innerStyle}>{this.props.buttonText}</div></button>
         <div className={style.overlay} style={{ display: this.state.display }}>
           <div className={style.modal}>
             <div className={style.header}>
