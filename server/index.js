@@ -1,14 +1,14 @@
 const express = require('express');
 const db = require('./database/db.js');
+const path = require('path');
 
 const app = express();
 
 app.use(express.json());
-app.use(express.static(__dirname + '/../public'));
+app.use('/hostels/:hostel_id', express.static(path.join(__dirname, '../public')));
 
 
-app.get('hostels/:id/api/reviews', (req, res) => {
-  console.log(req.params)
+app.get('/hostels/:id/api/reviews', (req, res) => {
   const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id WHERE reviews.hostel_id = ${req.params.id}`;
   db.connection.query(queryStr, (err, response) => {
     if (err) {

@@ -46,6 +46,7 @@
     "moment": "^2.27.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
+    "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-svg-loader": "^3.0.3"
