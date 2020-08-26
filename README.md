@@ -24,14 +24,19 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 ### Installing Dependencies
 
 npm install
-np run build
 Make sure you install mysql or MariaDB
+
+### Seed the Database
 In server/database, change the name of dbconfig_UPDATEME.js to dbconfig.js and input the credentials for your database.
+From the root of the project, run mysql -u [USER_NAME] -p <server/schema.sql
+  If your user doesn't have a password, delete the -p when you run it.
+npm run seed (once you get confirmation that the DB has been seeded, use CTRL+C to return to the console)
 
-From within the root directory:
-```sh
-npm install -g webpack
-npm install
-```
+### Compile webpack
+npm run build
 
+### Start the server
+npm run start
 
+### Load the component
+In your browser, navigate to http://localhost:3001/hostels/0
