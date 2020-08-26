@@ -39,4 +39,9 @@ npm run build
 npm run start
 
 ### Load the component
-In your browser, navigate to http://localhost:3001/hostels/0
+In your browser, navigate to http://localhost:3001/hostels/1
+The number at the end is ID of the product you wish to view.
+Product IDs range from 1 - 99.
+
+### Tests
+Jest is currently configured for testing, but tests do not currently work.
