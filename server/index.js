@@ -36,8 +36,7 @@ app.put('/hostels/:id/api/reviews', (req, res) => {
 */
 
 app.delete('/api/reviews/:id', (req, res) => {
-  const queryStr = `DELETE FROM reviews WHERE id=${req.params.id}`;
-  db.connection.query(queryStr, (err, result) => {
+  db.deleteReview(req.params.id, (err, result) => {
     if (err) {
       res.sendStatus(500);
     } else if (result) { res.send(result); }

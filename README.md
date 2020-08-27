@@ -15,10 +15,6 @@ Contains a fullstack React module with components for displaying a hostel's revi
 
 ## Requirements
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-- Node 6.13.0
-- etc
-
 ## Development
 
 ### Installing Dependencies
@@ -45,3 +41,32 @@ Product IDs range from 1 - 99.
 
 ### Tests
 Jest is currently configured for testing, but tests do not currently work.
+
+## Usage
+
+With this module you can review reviews by hostel listing. You can also interact with the data using the API.
+
+### API
+
+- Get full information of a listing
+
+Method & Path
+
+- Delete a listing
+  - Method & Path
+
+    `DELETE /api/reviews/:id`
+
+  - Sample Response
+    ```sh
+    {
+      "fieldCount": 0,
+      "affectedRows": 1,
+      "insertId": 0,
+      "serverStatus": 2,
+      "warningCount": 0,
+      "message": "",
+      "protocol41": true,
+      "changedRows": 0
+    }
+    ```
