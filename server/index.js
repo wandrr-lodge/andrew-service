@@ -1,6 +1,8 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
+const moment = require('moment');
 const db = require('./database/db.js');
 
 const app = express();
@@ -34,12 +36,49 @@ app.get('/api/reviews/:id', (req, res) => {
   });
 });
 
-/*
-app.post('/hostels/:id/api/reviews', (req, res) => {
-  const queryStr = '';
-  db.connection.query
-});
+app.post('/api/reviews', (req, res) => {
+  if (req.body === undefined) {
+    res.status(400).send('please include data to populate the review');
+  }
+  const {
+    hostel_id, author_id, desc, security, location,
+    staff, atmosphere, cleanliness, facilities, value, total,
+  } = req.body;
 
+  if (!hostel_id || !author_id || !desc || !security
+    || !location || !staff || !atmosphere || !cleanliness
+    || !facilities || !value || !total) {
+    res.status(400).send(`the following fields are required: {
+      hostel_id: <Number>,
+      author_id: <Number>,
+      desc: <String>, // max 255 characters
+      security: <Number>, // rating out of 10
+      location: <Number>, // rating out of 10
+      staff <Number>, // rating out of 10
+      atmosphere <Number>, // rating out of 10
+      cleanliness <Number>, // rating out of 10
+      facilities <Number>, // rating out of 10
+      value <Number>, // rating out of 10
+      total <Number>), // average of all ratings,
+    }`);
+  }
+
+  // get the current timestamp and format it
+  const timestamp = Date.now();
+  let created_at = new Date(timestamp);
+  created_at = moment(created_at).format('YYYY-MM-DD');
+
+  const queryStr = `INSERT INTO reviews (hostel_id, author_id, description, security, location, staff, atmosphere, cleanliness, facilities, value, total, created_at) VALUES ("${hostel_id}", "${author_id}", "${desc}", "${security}", "${location}", "${staff}", "${atmosphere}", "${cleanliness}", "${facilities}", "${value}", "${total}", "${created_at}")`;
+
+  db.connection.query(queryStr, (err, result) => {
+    if (err) {
+      console.log('error in post request: ', err);
+      res.sendStatus(500);
+    } else if (result) {
+      res.status(201).send(`review created! insertId: ${result.insertId}`);
+    }
+  });
+});
 
 /*
 app.put('/hostels/:id/api/reviews', (req, res) => {

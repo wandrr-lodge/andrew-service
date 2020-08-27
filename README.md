@@ -125,9 +125,45 @@ With this module you can review reviews by hostel listing. You can also interact
           "name": "user_name",
           "gender": "Male",
           "age_group": "18-24",
-          "picture_url": "server/database/images/img4.jpg"
+          "picture_url": "URL"
       }
     ]
+    ```sh
+
+- Add a new review
+  - Method & Path
+
+  `POST api/reviews/`
+
+  - Request Body (All properties are **required**)
+  ```sh
+  {
+    hostel_id: <Number>,
+    author_id: <Number>,
+    desc: <String>, // max 255 characters
+    security: <Number>, // rating out of 10
+    location: <Number>, // rating out of 10
+    staff <Number>, // rating out of 10
+    atmosphere <Number>, // rating out of 10
+    cleanliness <Number>, // rating out of 10
+    facilities <Number>, // rating out of 10
+    value <Number>, // rating out of 10
+    total <Number>), // average of all ratings
+    created_at DATE,
+  }
+  ```sh
+
+  - Sample Response
+  ```sh
+    review created! insertId: 3003
+  ```sh
+
+
+
+  }
+
+  - Sample Response
+    ```sh
     ```sh
 
 
