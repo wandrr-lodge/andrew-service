@@ -17,6 +17,7 @@ Contains a fullstack React module with components for displaying a hostel's revi
 
 ### Dependencies
   - Node 14.4.0
+  - MySQL v5.7.31 OR MariaDB 10.4.13
   - "@fortawesome/fontawesome-svg-core": "^1.2.30",
   - "@fortawesome/free-solid-svg-icons": "^5.14.0",
   - "@fortawesome/react-fontawesome": "^0.1.11",
@@ -55,12 +56,15 @@ Contains a fullstack React module with components for displaying a hostel's revi
 ### Installing Dependencies
 
 npm install
-Also install mysql or MariaDB
+
+Also install mySQL v5.7.31 OR MariaDB v10.4.13
 
 ### Seed the Database
 In server/database, change the name of dbconfig_UPDATEME.js to dbconfig.js and input the credentials for your database.
-From the root of the project, run mysql -u [USER_NAME] -p <server/schema.sql
-  If your user doesn't have a password, delete the -p when you run it.
+
+From the root directory, run mysql -u [USER_NAME] -p <server/schema.sql
+If your user doesn't have a password, delete the -p when you run it.
+
 npm run seed (once you get confirmation that the DB has been seeded, use CTRL+C to return to the console)
 
 ### Compile webpack
@@ -71,15 +75,15 @@ npm run start
 
 ### Load the component
 In your browser, navigate to http://localhost:3001/hostels/1
-The number at the end is ID of the product you wish to view.
+The number at the end is the ID of the product you wish to view.
 Product IDs range from 1 - 99.
 
 ### Tests
-Jest is currently configured for testing, but tests do not currently work.
+Jest is currently configured for testing, but tests are very minimal.
 
 ## Usage
 
-With this module you can review reviews by hostel listing. You can also interact with the data using the API.
+With this module you can display reviews by hostel listing. You can also interact with the data using the API.
 
 ### API
 
