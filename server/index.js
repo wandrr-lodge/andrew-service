@@ -12,10 +12,23 @@ app.get('/hostels/:id/api/reviews', (req, res) => {
   const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id WHERE reviews.hostel_id = ${req.params.id}`;
   db.connection.query(queryStr, (err, response) => {
     if (err) {
-      console.log(err);
+      console.log(`an error occured getting all reviews for hostel id ${req.params.id}`, err);
       res.sendStatus(500);
     } else {
-      console.log('done');
+      console.log('query successful');
+      res.json(response);
+    }
+  });
+});
+
+app.get('/api/reviews/:id', (req, res) => {
+  const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id WHERE reviews.id = ${req.params.id}`;
+  db.connection.query(queryStr, (err, response) => {
+    if (err) {
+      console.log(`an error occured getting review id ${req.params.id}`, err);
+      res.sendStatus(500);
+    } else {
+      console.log('query successful');
       res.json(response);
     }
   });
@@ -26,7 +39,7 @@ app.post('/hostels/:id/api/reviews', (req, res) => {
   const queryStr = '';
   db.connection.query
 });
-*/
+
 
 /*
 app.put('/hostels/:id/api/reviews', (req, res) => {

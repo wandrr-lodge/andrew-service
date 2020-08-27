@@ -48,9 +48,88 @@ With this module you can review reviews by hostel listing. You can also interact
 
 ### API
 
-- Get full information of a listing
+- Get full information of all reviews associated with a hostel
+  - Method & Path
 
-Method & Path
+  `GET /hostels/:hostel_id/api/reviews`
+
+  - Sample Response
+    ```sh
+    [
+      {
+          "id": 1,
+          "hostel_id": 7,
+          "author_id": 1,
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam elementum imperdiet metus, ac imperdiet libero. Suspendisse scelerisque nisi sit amet neque suscipit",
+          "security": 4,
+          "location": 4,
+          "staff": 4,
+          "atmosphere": 8,
+          "cleanliness": 5,
+          "facilities": 2,
+          "value": 2,
+          "total": 4.1,
+          "created_at": "2020-05-22T07:00:00.000Z",
+          "authdescription": "Avid Traveller",
+          "name": "user_name",
+          "gender": "Female",
+          "age_group": "31-40",
+          "picture_url": "URL"
+      },
+      {
+          "id": 2,
+          "hostel_id": 7,
+          "author_id": 2,
+          "description": "Nunc non ultricies ipsum. Curabitur at quam elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent sed nunc dui. Duis tristique, risus at ornare eleifend",
+          "security": 10,
+          "location": 8,
+          "staff": 10,
+          "atmosphere": 4,
+          "cleanliness": 4,
+          "facilities": 7,
+          "value": 2,
+          "total": 6.4,
+          "created_at": "2020-05-10T07:00:00.000Z",
+          "authdescription": "Novice Nomad",
+          "name": "user_name",
+          "gender": "Female",
+          "age_group": "31-40",
+          "picture_url": "URL"
+      },
+    ]
+    ```sh
+
+- Retrieve a single review
+  - Method & Path
+
+  `GET api/reviews/:id`
+
+  - Sample Response
+    ```sh
+    [
+      {
+          "id": 7,
+          "hostel_id": 1,
+          "author_id": 7,
+          "description": "Sed id elit ac libero viverra semper eget id erat. Maecenas at aliquam elit. Morbi et aliquam sapien. Proin imperdiet placerat vehicula.",
+          "security": 9,
+          "location": 6,
+          "staff": 1,
+          "atmosphere": 10,
+          "cleanliness": 8,
+          "facilities": 8,
+          "value": 1,
+          "total": 6.1,
+          "created_at": "2020-06-02T07:00:00.000Z",
+          "authdescription": "Novice Nomad",
+          "name": "user_name",
+          "gender": "Male",
+          "age_group": "18-24",
+          "picture_url": "server/database/images/img4.jpg"
+      }
+    ]
+    ```sh
+
 
 - Delete a listing
   - Method & Path
