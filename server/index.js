@@ -47,29 +47,41 @@ app.post('/api/reviews', (req, res) => {
   if (req.body === undefined) {
     res.status(400).send('please include data to populate the review');
   }
-  const {
-    hostel_id, author_id, description, security, location,
-    staff, atmosphere, cleanliness, facilities, value, total,
-  } = req.body;
 
-  // check if any fields are missing
-  if ((!hostel_id || !author_id || !description || !security
-    || !location || !staff || !atmosphere || !cleanliness
-    || !facilities || !value || !total) === undefined) {
-    res.status(400).send(`the following fields are required: {
-      hostel_id: <Number>,
-      author_id: <Number>,
-      description: <String>, // max 255 characters
-      security: <Number>, // rating out of 10
-      location: <Number>, // rating out of 10
-      staff <Number>, // rating out of 10
-      atmosphere <Number>, // rating out of 10
-      cleanliness <Number>, // rating out of 10
-      facilities <Number>, // rating out of 10
-      value <Number>, // rating out of 10
-      total <Number>, // average of all ratings,
-    }`);
-  } else {
+  const properties = ['hostel_id', 'author_id', 'description', 'security', 'location',
+    'staff', 'atmosphere', 'cleanliness', 'facilities', 'value', 'total'];
+
+  const missingPropsErr = `the following fields are required: {
+    hostel_id: <Number>,
+    author_id: <Number>,
+    description: <String>, // max 255 characters
+    security: <Number>, // rating out of 10
+    location: <Number>, // rating out of 10
+    staff <Number>, // rating out of 10
+    atmosphere <Number>, // rating out of 10
+    cleanliness <Number>, // rating out of 10
+    facilities <Number>, // rating out of 10
+    value <Number>, // rating out of 10
+    total <Number>, // average of all ratings,
+  }`;
+
+  let aPropIsMissing = false;
+
+  // check if body has all of the required fields
+  for (let propIndex = 0; propIndex < properties.length; propIndex += 1) {
+    if (!Object.hasOwnProperty.call(req.body, properties[propIndex])) {
+      aPropIsMissing = true;
+      res.status(400).send(missingPropsErr);
+      break;
+    }
+  }
+
+  if (!aPropIsMissing) {
+    const {
+      hostel_id, author_id, description, security, location,
+      staff, atmosphere, cleanliness, facilities, value, total,
+    } = req.body;
+
     // get the current timestamp and format it
     const timestamp = Date.now();
     let created_at = new Date(timestamp);
@@ -77,6 +89,7 @@ app.post('/api/reviews', (req, res) => {
 
     const queryStr = `INSERT INTO reviews (hostel_id, author_id, description, security, location, staff, atmosphere, cleanliness, facilities, value, total, created_at) VALUES ("${hostel_id}", "${author_id}", "${description}", "${security}", "${location}", "${staff}", "${atmosphere}", "${cleanliness}", "${facilities}", "${value}", "${total}", "${created_at}")`;
 
+    // query the database
     db.connection.query(queryStr, (err, result) => {
       if (err) {
         console.log('error in post request: ', err);
