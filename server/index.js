@@ -82,7 +82,7 @@ app.post('/api/reviews', (req, res) => {
         console.log('error in post request: ', err);
         res.sendStatus(500);
       } else if (result) {
-        res.status(201).send(`review created! insertId: ${result.insertId}`);
+        res.status(201).send(`Review successfully created! ID: ${result.insertId}`);
       }
     });
   }
