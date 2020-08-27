@@ -1,8 +1,8 @@
+/* eslint-disable */
 import React from 'react';
 import axios from 'axios';
 import DefaultView from './modules/defaultView.jsx';
-import LatestReviews from './modules/LatestReviews.jsx'
-import ModalWindow from './modules/ModalWindow.jsx';
+import LatestReviews from './modules/LatestReviews.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,22 +12,22 @@ class App extends React.Component {
       dummyData: [{
         age_group: 2,
         atmosphere: 5,
-        authdescription: "Globetrotter",
+        authdescription: 'Globetrotter',
         author_id: 1,
         cleanliness: 8,
-        created_at: "2020-07-21T07:00:00.000Z",
-        description: "vulputate viverra ex sagittis. Aenean sed convallis augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae",
+        created_at: '2020-07-21T07:00:00.000Z',
+        description: 'vulputate viverra ex sagittis. Aenean sed convallis augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae',
         facilities: 5,
         hostel_id: 1,
         id: 1,
         gender: 'Female',
         location: 3,
-        name: "rubberyfrantic",
-        picture_url: "server/database/images/img3.jpg",
+        name: 'rubberyfrantic',
+        picture_url: 'server/database/images/img3.jpg',
         security: 1,
         staff: 6,
         total: 4.71,
-        value: 5
+        value: 5,
       }],
       mounted: false,
       averages: {
@@ -38,37 +38,28 @@ class App extends React.Component {
         cleanliness: 8.9,
         facilities: 8.4,
         value: 9.1,
-        total: 9.1
+        total: 9.1,
       },
       topfour: [],
-      word: 'Superb'
+      word: 'Superb',
     };
   }
 
-  query(callback) {
-    axios.get(`${window.location.href}api/reviews`)
-      .then((results) => {
-        callback(null, results);
-      })
-      .catch((error) => {
-        callback(error);
-      })
-  };
-
-  setAverages(arr) {
-    let averages = {};
-    let word = 'Review'
-    for (let review of arr) {
-      for (let key in review) {
+  //
+  setAverages(data) {
+    const averages = {};
+    let word = 'Review';
+    for (const review of data) {
+      for (const key in review) {
         averages[key] === undefined
-        ? averages[key] = review[key]
-        : averages[key] += review[key]
+          ? averages[key] = review[key]
+          : averages[key] += review[key];
       }
     }
-    for (let key in averages) {
-      averages[key] = Math.round((averages[key] / arr.length) * 10) / 10;
+    for (const key in averages) {
+      averages[key] = Math.round((averages[key] / data.length) * 10) / 10;
     }
-    let total = averages.total;
+    const { total } = averages;
     if (total >= 6 && total < 7) {
       word = 'Good';
     } else if (total >= 7 && total < 8) {
@@ -79,36 +70,48 @@ class App extends React.Component {
       word = 'Fun';
     }
     this.setState({
-      averages: averages,
-      word: word
+      averages,
+      word,
     });
   }
 
-  getTop(arr) {
-    let top = [arr[1], arr[2], arr[3], arr[4]];
+  // actual api call
+  query(callback) {
+    axios.get(`${window.location.href}api/reviews`)
+      .then((results) => {
+        callback(null, results);
+      })
+      .catch((error) => {
+        callback(error);
+      });
+  }
+
+  // copies the first four reviews in the array
+  getTop(data) {
+    const top = [data[1], data[2], data[3], data[4]];
     this.setState({
-      topfour: top
-    })
+      topfour: top,
+    });
   }
 
   componentDidMount() {
     this.query((err, res) => {
       if (err) {
-        console.log('ERROR IN GET, CLIENT ', err)
+        console.log('ERROR IN GET, CLIENT ', err);
       } else {
-        console.log(res.data);
+        // console.log('componentDidMount: ', res.data);
         this.setState({
           reviews: res.data,
-          mounted: true
-        })
-        this.setAverages(res.data)
-        this.getTop(res.data)
+          mounted: true,
+        });
+        this.setAverages(res.data);
+        this.getTop(res.data);
       }
     });
-  };
+  }
 
   render() {
-    let mounted = this.state.mounted;
+    const { mounted } = this.state;
     return (
       <div id="reviews-section">
         <div id="ratings">
@@ -116,15 +119,12 @@ class App extends React.Component {
         </div>
         <div id="latest-reviews">
           {mounted
-          ? <LatestReviews topfour={this.state.topfour} reviews={this.state.reviews} averages={this.state.averages} count={this.state.reviews.length} word={this.state.word} />
-          : <LatestReviews topfour={this.state.dummyData} reviews={this.state.dummyData} averages={this.state.averages} count={this.state.reviews.length} word={this.state.word} />
-          }
+            ? <LatestReviews topfour={this.state.topfour} reviews={this.state.reviews} averages={this.state.averages} count={this.state.reviews.length} word={this.state.word} />
+            : <LatestReviews topfour={this.state.dummyData} reviews={this.state.dummyData} averages={this.state.averages} count={this.state.reviews.length} word={this.state.word} />}
         </div>
       </div>
-    )
-
+    );
   }
 }
-
 
 export default App;
