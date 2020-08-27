@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
 const db = require('./database/db.js');
@@ -17,6 +18,29 @@ app.get('/hostels/:id/api/reviews', (req, res) => {
       console.log('done');
       res.json(response);
     }
+  });
+});
+
+/*
+app.post('/hostels/:id/api/reviews', (req, res) => {
+  const queryStr = '';
+  db.connection.query
+});
+*/
+
+/*
+app.put('/hostels/:id/api/reviews', (req, res) => {
+  const queryStr = '';
+  db.connection.query
+});
+*/
+
+app.delete('/api/reviews/:id', (req, res) => {
+  const queryStr = `DELETE FROM reviews WHERE id=${req.params.id}`;
+  db.connection.query(queryStr, (err, result) => {
+    if (err) {
+      res.sendStatus(500);
+    } else if (result) { res.send(result); }
   });
 });
 
