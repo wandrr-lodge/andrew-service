@@ -17,7 +17,9 @@ const getRandomInt = (min, max) => {
 // get a random decimal to one place value, inclusive of min and max
 // eslint-disable-next-line arrow-body-style
 const getRandomDec = (min, max) => {
-  return Math.min(Math.floor(Math.random() * ((max + 1) * 10 - min * 10) + min * 10) / 10, 10);
+  max = (max + 1) * 10;
+  min *= 10;
+  return Math.min(Math.floor(Math.random() * (max - min) + min) / 10, 10);
 };
 
 // takes in an integer and generates that many hostels
@@ -66,21 +68,34 @@ async function generateReviews(num) {
   // iterate over hostel ids
   for (let i = 0; i < num; i += 1) {
     // generate a random number of reviews between 0 & 10
-    const numOfReviews = getRandomInt(10);
+    const numOfReviews = 3; // getRandomInt(10);
     // generate that many reviews
     for (let j = 0; j < numOfReviews; j += 1) {
+      // add initial attributes to the record
       const record = {
-        hostel_id: getRandomInt(1, numOfHostels),
+        hostel_id: i,
         author_id: getRandomInt(1, numOfAuthors),
         description: faker.lorem.paragraph(),
-        security: getRandomInt(0, )
       };
+      // loop through the rest of the attributes array
+      // add all ratings attributes except total to the record
+      let ratingsTotal = 0;
+      let ratingsCount = 0;
+      for (let k = 3; k < attributes.length - 1; k += 1) {
+        const rating = getRandomDec(1, 10);
+        record[attributes[k]] = rating;
+        // keep track of the running total and count
+        ratingsTotal += rating;
+        ratingsCount += 1;
+      }
 
+      // find the average rating and add to the record
+      // eslint-disable-next-line no-mixed-operators
+      record['total'] = Math.round(ratingsTotal * 10 / ratingsCount) / 10;
     }
-
   }
 }
-//generateReviews(numOfHostels);
+generateReviews(1);
 
 // Generate between 0 and 20 reviews for each hostel
   // iterate from 0 - 10M
