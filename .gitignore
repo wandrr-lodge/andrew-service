@@ -26,3 +26,4 @@ dist/
 
 #database config
 server/database/dbconfig.js
+server/database/data.csv
