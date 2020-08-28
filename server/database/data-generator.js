@@ -1,15 +1,31 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable indent */
 const faker = require('faker');
-const fs = require('fs');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
-const csvWriter = createCsvWriter({
-  path: './data.csv',
-  header: [
-    { id: 'id', title: 'ID' },
-    { id: 'hostel_name', title: 'Hostel_Name' },
-  ],
-});
+async function generateHostels() {
+  // define headers for csv
+  const csvWriter = createCsvWriter({
+    path: './hostels.csv',
+    header: [
+      { id: 'id', title: 'id' },
+      { id: 'hostel_name', title: 'hostel_name' },
+    ],
+  });
+
+  // Goal: 10 million fake hostels
+  // iterate through 0 - 10M
+  for (let i = 0; i < 100000; i += 1) {
+    // create hostel name and id
+    const record = [
+      { id: `hostel${i}`, hostel_name: `hostel${i}` },
+    ];
+    await csvWriter.writeRecords(record);
+  }
+}
+generateHostels();
+
+/* write to file
 
 const records = [
   { id: 3, hostel_name: 'Hostel3' },
@@ -24,10 +40,7 @@ csvWriter.writeRecords(records)
     console.log('an error occurred ', error);
   });
 
-// Goal: 10 million fake hostels
-// iterate through 0 - 10M
-// generate hostel${i};
-// write to file
+*/
 
 // Generate between 0 and 20 reviews for each hostel
   // iterate from 0 - 10M
