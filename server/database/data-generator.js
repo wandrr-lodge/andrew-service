@@ -3,6 +3,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable indent */ // TODO: remove this line
 const faker = require('faker');
+const moment = require('moment');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const numOfHostels = 1000;
@@ -20,6 +21,11 @@ const getRandomDec = (min, max) => {
   max = (max + 1) * 10;
   min *= 10;
   return Math.min(Math.floor(Math.random() * (max - min) + min) / 10, 10);
+};
+
+const getRandomDate = () => {
+  const date = new Date(+(new Date()) - Math.random() * 31556952000);
+  return moment(date).format('YYYY-MM-DD');
 };
 
 // takes in an integer and generates that many hostels
@@ -76,6 +82,7 @@ async function generateReviews(num) {
         hostel_id: i,
         author_id: getRandomInt(1, numOfAuthors),
         description: faker.lorem.paragraph(),
+        date: getRandomDate(),
       };
       // loop through the rest of the attributes array
       // add all ratings attributes except total to the record
@@ -92,6 +99,8 @@ async function generateReviews(num) {
       // find the average rating and add to the record
       // eslint-disable-next-line no-mixed-operators
       record['total'] = Math.round(ratingsTotal * 10 / ratingsCount) / 10;
+
+      console.log('record: ', record);
     }
   }
 }
@@ -112,7 +121,7 @@ generateReviews(1);
     // add the entry with that name and rating
     // keep a running talley of this number
   // after iterating, divide random talley by length of the ratings array, input this as the total
-  // generate a random data and use moment to format it
+  // generate a random date and use moment to format it
 
 // generate authors
   //
