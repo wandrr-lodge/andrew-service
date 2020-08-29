@@ -28,5 +28,7 @@ dist/
 server/database/dbconfig.js
 
 # random data files
-server/database/data.csv
+server/database/reviews.csv
 server/database/hostels.csv
+server/database/authors.csv
+
