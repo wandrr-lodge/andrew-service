@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const moment = require('moment');
 
 /* Utility Functions */
@@ -31,10 +32,13 @@ module.exports.generateHeader = (attributes) => {
 };
 
 // console logs regular updates
-module.exports.giveUpdate = (count, name, start) => {
+module.exports.giveUpdate = (count, name, start, final) => {
   const duration = (Date.now() - start) / 1000;
 
   if (name === 'author') console.log(`📝 ${count} ${name} records generated in ${duration} seconds! 📝`);
   else if (name === 'hostel') console.log(`🛏  ${count} ${name} records generated in ${duration} seconds! 🛏`);
   else console.log(`🚀 ${count} ${name} records generated in ${duration} seconds! 🚀`);
+
+  const memory = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+  if (final === 'final') console.log(`${memory} MB used`);
 };
