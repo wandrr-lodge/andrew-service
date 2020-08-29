@@ -6,19 +6,21 @@ const faker = require('faker');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const Utils = require('./data-generator-utils');
 
-const numOfHostels = 100000;
-const numOfAuthors = 2000;
+const numOfHostels = 100;
+const numOfAuthors = 100;
 
 const hostelsFilePath = './hostels.csv';
 const reviewsFilePath = './reviews.csv';
 const authorsFilePath = './authors.csv';
 
-const updateThreshold = 10000;
+const updateThreshold = 50;
 
 /* Data Generation */
 
 // takes in an integer and generates that many hostels
-async function generateHostels(num) {
+async function generateHostels(num, callback) {
+  const start = Date.now();
+
   // define headers for csv
   const csvWriter = createCsvWriter({
     path: hostelsFilePath,
@@ -39,18 +41,21 @@ async function generateHostels(num) {
       await csvWriter.writeRecords(record)
         .then(() => {
           count += 1;
-          if (count % updateThreshold === 0) Utils.giveUpdate(count, 'hostel');
+          if (count % updateThreshold === 0 && count !== num) Utils.giveUpdate(count, 'hostel', start);
         });
     } catch (error) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  Utils.giveUpdate(count, 'hostel');
+  Utils.giveUpdate(count, 'author', start);
+  callback();
 }
 
 // takes in the number of hostels
 // generates a random number of reviews for each hostel
-async function generateReviews(num) {
+async function generateReviews(num, callback) {
+  const start = Date.now();
+
   // names of columns for the CSV file
   const attributes = ['review_id', 'hostel_id', 'author_id', 'description', 'date', 'security', 'location',
     'staff', 'atmosphere', 'cleanliness', 'facilities', 'value', 'total'];
@@ -98,19 +103,22 @@ async function generateReviews(num) {
         await csvWriter.writeRecords(record)
           .then(() => {
             count += 1;
-            if (count % updateThreshold === 0) Utils.giveUpdate(count, 'review');
+            if (count % updateThreshold === 0 && count !== num) Utils.giveUpdate(count, 'review', start);
           });
       } catch (error) {
         console.log(`an error occurred on hostel ${i}, review ${j}`, error);
       }
     }
   }
-  Utils.giveUpdate(count, 'review');
+  Utils.giveUpdate(count, 'review', start);
+  callback();
 }
 
 // takes in the number of authors
 // generates that many authors
-async function generateAuthors(num) {
+async function generateAuthors(num, callback) {
+  const start = Date.now();
+
   // names of columns for the CSV file
   const attributes = ['author_id', 'name', 'age_group', 'gender', 'authdescription'];
   const userAges = ['18-24', '25-30', '31-40', '41+'];
@@ -139,15 +147,24 @@ async function generateAuthors(num) {
       await csvWriter.writeRecords(record)
         .then(() => {
           count += 1;
-          if (count % updateThreshold === 0) Utils.giveUpdate(count, 'author');
+          if (count % updateThreshold === 0 && count !== num) Utils.giveUpdate(count, 'author', start);
         });
     } catch (error) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  Utils.giveUpdate(count, 'author');
+  Utils.giveUpdate(count, 'author', start);
+  callback();
 }
 
-generateHostels(numOfHostels);
-generateReviews(numOfHostels);
-generateAuthors(numOfAuthors);
+generateHostels(numOfHostels, () => {
+  generateReviews(numOfHostels, () => {
+    generateAuthors(numOfAuthors, () => {});
+  });
+});
+
+// make them run in order
+// add a timer:
+  // start time at the beginning of each function
+  // add time update to getUpdate
+//

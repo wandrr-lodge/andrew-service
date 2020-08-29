@@ -31,8 +31,10 @@ module.exports.generateHeader = (attributes) => {
 };
 
 // console logs regular updates
-module.exports.giveUpdate = (count, name) => {
-  if (name === 'author') console.log(`📝 ${count} ${name} records generated! 📝`);
-  else if (name === 'hostel') console.log(`🛏  ${count} ${name} records generated! 🛏`);
-  else console.log(`🚀 ${count} ${name} records generated! 🚀`);
+module.exports.giveUpdate = (count, name, start) => {
+  const duration = (Date.now() - start) / 1000;
+
+  if (name === 'author') console.log(`📝 ${count} ${name} records generated in ${duration} seconds! 📝`);
+  else if (name === 'hostel') console.log(`🛏  ${count} ${name} records generated in ${duration} seconds! 🛏`);
+  else console.log(`🚀 ${count} ${name} records generated in ${duration} seconds! 🚀`);
 };
