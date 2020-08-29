@@ -33,6 +33,7 @@
     "build": "webpack -d --watch",
     "start": "nodemon server/index.js",
     "seed": "node server/database/seed.js",
+    "generate": "node server/database/data/data-generator.js",
     "test": "jest"
   },
   "dependencies": {
