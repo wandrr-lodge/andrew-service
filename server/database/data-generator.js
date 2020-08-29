@@ -29,6 +29,15 @@ const getRandomDate = () => {
   return moment(date).format('YYYY-MM-DD');
 };
 
+const generateHeader = (attributes) => {
+  // construct the array of headers that csv-writer needs
+  const header = [];
+  for (let i = 0; i < attributes.length; i += 1) {
+    header.push({ id: `${attributes[i]}`, title: `${attributes[i]}` });
+  }
+  return header;
+}
+
 // takes in an integer and generates that many hostels
 async function generateHostels(num) {
   // define headers for csv
@@ -55,7 +64,7 @@ async function generateHostels(num) {
   }
   console.log(i, 'hostel records generated.');
 }
-generateHostels(numOfHostels);
+// generateHostels(numOfHostels);
 
 // takes in the number of hostels
 // generates a random number of reviews for each hostel
@@ -72,7 +81,6 @@ async function generateReviews(num) {
   // define the headers
   const csvWriter = createCsvWriter({ path: './reviews.csv', header });
 
-  console.log('header', header);
   // iterate over hostel ids
   for (var i = 0; i < num; i += 1) {
     // generate a random number of reviews between 0 & 10
@@ -117,24 +125,52 @@ async function generateReviews(num) {
   }
   console.log(i * j, 'reviews generated');
 }
-generateReviews(1);
+// generateReviews(1);
 
-// Generate between 0 and 20 reviews for each hostel
-  // iterate from 0 - 10M
-    // call the generate hostel function
+// takes in the number of authors
+// generates that many authors
+async function generateAuthors(num) {
+  // names of columns for the CSV file
+  const attributes = ['author_id', 'name', 'age_group', 'gender', 'authdescription'];
+  const userAges = ['18-24', '25-30', '31-40', '41+'];
+  const userDescriptions = ['Globetrotter', 'Avid Traveller', 'Novice Nomad'];
+  const genders = ['Female', 'Male'];
 
-// generateHostel FN
-  // write a hostel_id
-  // generate a random author_id
-  // generate a random description (lorem-ipsem)
-  // const ratings = ['security', 'location', 'staff',
-  // 'atmosphere', 'cleanliness', 'facilities', 'value']
-  // iterate over the ratings array
-    // generate a random number
-    // add the entry with that name and rating
-    // keep a running talley of this number
-  // after iterating, divide random talley by length of the ratings array, input this as the total
-  // generate a random date and use moment to format it
+  const header = generateHeader(attributes);
 
+  // define the headers
+  const csvWriter = createCsvWriter({ path: './authors.csv', header });
+
+  for (var i = 0; i < num; i += 1) {
+    try {
+      // create author name and id
+      const record = [
+        {
+          author_id: i,
+          name: faker.internet.userName(),
+          age_group: userAges[getRandomInt(0, 4)],
+          gender: genders[getRandomInt(0, 2)],
+          authdescription: userDescriptions[getRandomInt(0, 3)],
+        },
+      ];
+      // console.log('author record: ', record);
+      await csvWriter.writeRecords(record);
+    } catch (error) {
+      console.log('an error occurred on record ', i, error);
+    }
+  }
+  console.log(i, 'author records generated.');
+}
+
+generateAuthors(numOfAuthors);
+
+/*
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  authdescription VARCHAR(64),
+  name VARCHAR(64) UNIQUE,
+  gender VARCHAR(64),
+  age_group VARCHAR(64),
+  picture_url TEXT
+*/
 // generate authors
   //
