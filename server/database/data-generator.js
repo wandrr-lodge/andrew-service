@@ -5,10 +5,13 @@
 const faker = require('faker');
 const moment = require('moment');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const createCsvStringifier = require('csv-writer').createObjectCsvStringifier;
 
-const numOfHostels = 10;
+const numOfHostels = 5;
 const numOfAuthors = 100;
+
+const hostelsFilePath = './hostels.csv';
+const reviewsFilePath = './reviews.csv';
+const authorsFilePath = './authors.csv';
 
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
@@ -17,13 +20,13 @@ const getRandomInt = (min, max) => {
 };
 
 // get a random decimal to one place value, inclusive of min and max
-// eslint-disable-next-line arrow-body-style
 const getRandomDec = (min, max) => {
   max = (max + 1) * 10;
   min *= 10;
   return Math.min(Math.floor(Math.random() * (max - min) + min) / 10, 10);
 };
 
+// generates a random date in the last two years
 const getRandomDate = () => {
   const date = new Date(+(new Date()) - Math.random() * 31556952000);
   return moment(date).format('YYYY-MM-DD');
@@ -36,13 +39,13 @@ const generateHeader = (attributes) => {
     header.push({ id: `${attributes[i]}`, title: `${attributes[i]}` });
   }
   return header;
-}
+};
 
 // takes in an integer and generates that many hostels
 async function generateHostels(num) {
   // define headers for csv
   const csvWriter = createCsvWriter({
-    path: './hostels.csv',
+    path: hostelsFilePath,
     header: [
       { id: 'id', title: 'id' },
       { id: 'hostel_name', title: 'hostel_name' },
@@ -64,7 +67,6 @@ async function generateHostels(num) {
   }
   console.log(i, 'hostel records generated.');
 }
-// generateHostels(numOfHostels);
 
 // takes in the number of hostels
 // generates a random number of reviews for each hostel
@@ -79,13 +81,12 @@ async function generateReviews(num) {
     header.push({ id: `${attributes[i]}`, title: `${attributes[i]}` });
   }
   // define the headers
-  const csvWriter = createCsvWriter({ path: './reviews.csv', header });
+  const csvWriter = createCsvWriter({ path: reviewsFilePath, header });
 
   // iterate over hostel ids
   for (var i = 0; i < num; i += 1) {
     // generate a random number of reviews between 0 & 10
     const numOfReviews = getRandomInt(1, 10);
-    console.log('data-generator is running!', numOfReviews);
 
     // generate that many reviews
     for (var j = 0; j < numOfReviews; j += 1) {
@@ -112,12 +113,11 @@ async function generateReviews(num) {
 
         // find the average rating and add to the record
         // eslint-disable-next-line no-mixed-operators
-        record['total'] = Math.round(ratingsTotal * 10 / ratingsCount) / 10;
+        record.total = Math.round(ratingsTotal * 10 / ratingsCount) / 10;
+        // place in an array (required by csv-writer)
         record = [record];
-        console.log('record: ', record);
         // write record to the file
-        await csvWriter.writeRecords(record)
-          .then(() => console.log(`hostel ${i} review ${j} created!`));
+        await csvWriter.writeRecords(record);
       } catch (error) {
         console.log(`an error occurred on hostel ${i}, review ${j}`, error);
       }
@@ -125,7 +125,6 @@ async function generateReviews(num) {
   }
   console.log(i * j, 'reviews generated');
 }
-// generateReviews(1);
 
 // takes in the number of authors
 // generates that many authors
@@ -139,11 +138,12 @@ async function generateAuthors(num) {
   const header = generateHeader(attributes);
 
   // define the headers
-  const csvWriter = createCsvWriter({ path: './authors.csv', header });
+  const csvWriter = createCsvWriter({ path: authorsFilePath, header });
 
+  // generate author entries
   for (var i = 0; i < num; i += 1) {
     try {
-      // create author name and id
+      // generate an entry
       const record = [
         {
           author_id: i,
@@ -153,7 +153,6 @@ async function generateAuthors(num) {
           authdescription: userDescriptions[getRandomInt(0, 3)],
         },
       ];
-      // console.log('author record: ', record);
       await csvWriter.writeRecords(record);
     } catch (error) {
       console.log('an error occurred on record ', i, error);
@@ -162,15 +161,6 @@ async function generateAuthors(num) {
   console.log(i, 'author records generated.');
 }
 
+generateHostels(numOfHostels);
+generateReviews(numOfHostels);
 generateAuthors(numOfAuthors);
-
-/*
-id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  authdescription VARCHAR(64),
-  name VARCHAR(64) UNIQUE,
-  gender VARCHAR(64),
-  age_group VARCHAR(64),
-  picture_url TEXT
-*/
-// generate authors
-  //
