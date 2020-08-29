@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
@@ -5,12 +6,14 @@ const faker = require('faker');
 const moment = require('moment');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
-const numOfHostels = 5;
-const numOfAuthors = 100;
+const numOfHostels = 100000;
+const numOfAuthors = 2000;
 
 const hostelsFilePath = './data/hostels.csv';
 const reviewsFilePath = './data/reviews.csv';
 const authorsFilePath = './data/authors.csv';
+
+const updateThreshold = 10000;
 
 /* Utility Functions */
 const getRandomInt = (min, max) => {
@@ -42,6 +45,13 @@ const generateHeader = (attributes) => {
   return header;
 };
 
+// console logs regular updates
+const giveUpdate = (count, name) => {
+  if (name === 'author') console.log(`📝 ${count} ${name} records generated! 📝`);
+  else if (name === 'hostel') console.log(`🛏 ${count} ${name} records generated! 🛏`);
+  else console.log(`🚀 ${count} ${name} records generated! 🚀`);
+};
+
 /* Data Generation */
 
 // takes in an integer and generates that many hostels
@@ -64,12 +74,15 @@ async function generateHostels(num) {
         { id: i, hostel_name: `hostel${i}` },
       ];
       await csvWriter.writeRecords(record)
-        .then(() => { count += 1 });
+        .then(() => {
+          count += 1;
+          if (count % updateThreshold === 0) giveUpdate(count, 'hostel');
+        });
     } catch (error) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  console.log(count, 'hostel records generated.');
+  giveUpdate(count, 'hostel');
 }
 
 // takes in the number of hostels
@@ -120,13 +133,16 @@ async function generateReviews(num) {
         record = [record];
         // write record to the file
         await csvWriter.writeRecords(record)
-          .then(() => { count += 1 });
+          .then(() => {
+            count += 1;
+            if (count % updateThreshold === 0) giveUpdate(count, 'review');
+          });
       } catch (error) {
         console.log(`an error occurred on hostel ${i}, review ${j}`, error);
       }
     }
   }
-  console.log(count, 'reviews generated'); // TODO: fix this
+  giveUpdate(count, 'review');
 }
 
 // takes in the number of authors
@@ -158,12 +174,15 @@ async function generateAuthors(num) {
         },
       ];
       await csvWriter.writeRecords(record)
-        .then(() => { count += 1 });
+        .then(() => {
+          count += 1;
+          if (count % updateThreshold === 0) giveUpdate(count, 'author');
+        });
     } catch (error) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  console.log(count, 'author records generated.');
+  giveUpdate(count, 'author');
 }
 
 generateHostels(numOfHostels);
