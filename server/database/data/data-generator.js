@@ -3,15 +3,16 @@
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
 const faker = require('faker');
+const path = require('path');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const Utils = require('./data-generator-utils');
 
-const numOfHostels = 10000;
-const numOfAuthors = 10000;
+const numOfHostels = 100;
+const numOfAuthors = 100;
 
-const hostelsFilePath = './hostels.csv';
-const reviewsFilePath = './reviews.csv';
-const authorsFilePath = './authors.csv';
+const hostelsFilePath = path.resolve(__dirname, 'hostels.csv');
+const reviewsFilePath = path.resolve(__dirname, 'reviews.csv');
+const authorsFilePath = path.resolve(__dirname, 'authors.csv');
 
 const updateThreshold = 5000;
 
