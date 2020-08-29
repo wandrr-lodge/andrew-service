@@ -33,6 +33,7 @@
     "build": "webpack -d --watch",
     "start": "nodemon server/index.js",
     "seed": "node server/database/seed.js",
+    "generate": "node server/database/data/data-generator.js",
     "test": "jest"
   },
   "dependencies": {
@@ -40,7 +41,9 @@
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "axios": "^0.19.2",
+    "csv-writer": "^1.6.0",
     "express": "^4.17.1",
+    "faker": "^5.1.0",
     "jest": "^26.2.2",
     "jest-svg-transformer": "^1.0.0",
     "moment": "^2.27.0",
@@ -66,6 +69,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "lorem-ipsum": "^2.0.3",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"

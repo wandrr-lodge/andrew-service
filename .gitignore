@@ -24,5 +24,11 @@ coverage
 build/
 dist/
 
-#database config
+# database config
 server/database/dbconfig.js
+
+# random data files
+server/database/data/reviews.csv
+server/database/data/hostels.csv
+server/database/data/authors.csv
+
