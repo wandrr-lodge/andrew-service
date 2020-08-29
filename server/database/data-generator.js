@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
-/* eslint-disable indent */ // TODO: remove this line
 const faker = require('faker');
 const moment = require('moment');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
@@ -9,37 +8,41 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const numOfHostels = 5;
 const numOfAuthors = 100;
 
-const hostelsFilePath = './hostels.csv';
-const reviewsFilePath = './reviews.csv';
-const authorsFilePath = './authors.csv';
+const hostelsFilePath = './data/hostels.csv';
+const reviewsFilePath = './data/reviews.csv';
+const authorsFilePath = './data/authors.csv';
 
+/* Utility Functions */
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-// get a random decimal to one place value, inclusive of min and max
+// creates a random decimal to one place value, inclusive of min and max
 const getRandomDec = (min, max) => {
   max = (max + 1) * 10;
   min *= 10;
   return Math.min(Math.floor(Math.random() * (max - min) + min) / 10, 10);
 };
 
-// generates a random date in the last two years
+// generates a random date in the last two-ish years
 const getRandomDate = () => {
   const date = new Date(+(new Date()) - Math.random() * 31556952000);
   return moment(date).format('YYYY-MM-DD');
 };
 
+// takes in an array of attributes
+// constructs the array of column names that csv-writer needs
 const generateHeader = (attributes) => {
-  // construct the array of headers that csv-writer needs
   const header = [];
-  for (let i = 0; i < attributes.length; i += 1) {
-    header.push({ id: `${attributes[i]}`, title: `${attributes[i]}` });
-  }
+  attributes.forEach((columnName) => {
+    header.push({ id: `${columnName}`, title: `${columnName}` });
+  });
   return header;
 };
+
+/* Data Generation */
 
 // takes in an integer and generates that many hostels
 async function generateHostels(num) {
@@ -52,20 +55,21 @@ async function generateHostels(num) {
     ],
   });
 
-  // Goal: 10 million fake hostels
-  // iterate through 0 - 10M
-  for (var i = 0; i < num; i += 1) {
+  let count = 0;
+
+  for (let i = 0; i < num; i += 1) {
     try {
       // create hostel name and id
       const record = [
         { id: i, hostel_name: `hostel${i}` },
       ];
-      await csvWriter.writeRecords(record);
+      await csvWriter.writeRecords(record)
+        .then(() => { count += 1 });
     } catch (error) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  console.log(i, 'hostel records generated.');
+  console.log(count, 'hostel records generated.');
 }
 
 // takes in the number of hostels
@@ -75,25 +79,23 @@ async function generateReviews(num) {
   const attributes = ['review_id', 'hostel_id', 'author_id', 'description', 'date', 'security', 'location',
     'staff', 'atmosphere', 'cleanliness', 'facilities', 'value', 'total'];
 
-  // construct the array of headers that csv-writer needs
-  const header = [];
-  for (let i = 0; i < attributes.length; i += 1) {
-    header.push({ id: `${attributes[i]}`, title: `${attributes[i]}` });
-  }
+  const header = generateHeader(attributes);
+
   // define the headers
   const csvWriter = createCsvWriter({ path: reviewsFilePath, header });
 
+  let count = 0;
   // iterate over hostel ids
-  for (var i = 0; i < num; i += 1) {
-    // generate a random number of reviews between 0 & 10
+  for (let i = 0; i < num; i += 1) {
+    // generate a random number of reviews between 1 & 10
     const numOfReviews = getRandomInt(1, 10);
 
     // generate that many reviews
-    for (var j = 0; j < numOfReviews; j += 1) {
+    for (let j = 0; j < numOfReviews; j += 1) {
       // add initial attributes to the record
       try {
         let record = {
-          review_id: i + j,
+          review_id: count,
           hostel_id: i,
           author_id: getRandomInt(1, numOfAuthors),
           description: faker.lorem.paragraph(),
@@ -117,13 +119,14 @@ async function generateReviews(num) {
         // place in an array (required by csv-writer)
         record = [record];
         // write record to the file
-        await csvWriter.writeRecords(record);
+        await csvWriter.writeRecords(record)
+          .then(() => { count += 1 });
       } catch (error) {
         console.log(`an error occurred on hostel ${i}, review ${j}`, error);
       }
     }
   }
-  console.log(i * j, 'reviews generated');
+  console.log(count, 'reviews generated'); // TODO: fix this
 }
 
 // takes in the number of authors
@@ -141,7 +144,8 @@ async function generateAuthors(num) {
   const csvWriter = createCsvWriter({ path: authorsFilePath, header });
 
   // generate author entries
-  for (var i = 0; i < num; i += 1) {
+  let count = 0;
+  for (let i = 0; i < num; i += 1) {
     try {
       // generate an entry
       const record = [
@@ -153,12 +157,13 @@ async function generateAuthors(num) {
           authdescription: userDescriptions[getRandomInt(0, 3)],
         },
       ];
-      await csvWriter.writeRecords(record);
+      await csvWriter.writeRecords(record)
+        .then(() => { count += 1 });
     } catch (error) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  console.log(i, 'author records generated.');
+  console.log(count, 'author records generated.');
 }
 
 generateHostels(numOfHostels);
