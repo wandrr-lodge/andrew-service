@@ -5,8 +5,9 @@
 const faker = require('faker');
 const moment = require('moment');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const createCsvStringifier = require('csv-writer').createObjectCsvStringifier;
 
-const numOfHostels = 1000;
+const numOfHostels = 10;
 const numOfAuthors = 100;
 
 const getRandomInt = (min, max) => {
@@ -54,55 +55,67 @@ async function generateHostels(num) {
   }
   console.log(i, 'hostel records generated.');
 }
-// generateHostels(numOfHostels);
+generateHostels(numOfHostels);
 
 // takes in the number of hostels
 // generates a random number of reviews for each hostel
 async function generateReviews(num) {
   // names of columns for the CSV file
-  const attributes = ['hostel_id', 'author_id', 'description', 'security', 'location',
+  const attributes = ['review_id', 'hostel_id', 'author_id', 'description', 'date', 'security', 'location',
     'staff', 'atmosphere', 'cleanliness', 'facilities', 'value', 'total'];
 
   // construct the array of headers that csv-writer needs
-  const header = [{ id: 'id', title: 'id' }];
+  const header = [];
   for (let i = 0; i < attributes.length; i += 1) {
     header.push({ id: `${attributes[i]}`, title: `${attributes[i]}` });
   }
   // define the headers
   const csvWriter = createCsvWriter({ path: './reviews.csv', header });
 
+  console.log('header', header);
   // iterate over hostel ids
-  for (let i = 0; i < num; i += 1) {
+  for (var i = 0; i < num; i += 1) {
     // generate a random number of reviews between 0 & 10
-    const numOfReviews = 3; // getRandomInt(10);
+    const numOfReviews = getRandomInt(1, 10);
+    console.log('data-generator is running!', numOfReviews);
+
     // generate that many reviews
-    for (let j = 0; j < numOfReviews; j += 1) {
+    for (var j = 0; j < numOfReviews; j += 1) {
       // add initial attributes to the record
-      const record = {
-        hostel_id: i,
-        author_id: getRandomInt(1, numOfAuthors),
-        description: faker.lorem.paragraph(),
-        date: getRandomDate(),
-      };
-      // loop through the rest of the attributes array
-      // add all ratings attributes except total to the record
-      let ratingsTotal = 0;
-      let ratingsCount = 0;
-      for (let k = 3; k < attributes.length - 1; k += 1) {
-        const rating = getRandomDec(1, 10);
-        record[attributes[k]] = rating;
-        // keep track of the running total and count
-        ratingsTotal += rating;
-        ratingsCount += 1;
+      try {
+        let record = {
+          review_id: i + j,
+          hostel_id: i,
+          author_id: getRandomInt(1, numOfAuthors),
+          description: faker.lorem.paragraph(),
+          date: getRandomDate(),
+        };
+        // loop through the rest of the attributes array
+        // add all ratings attributes except total to the record
+        let ratingsTotal = 0;
+        let ratingsCount = 0;
+        for (let k = 5; k < attributes.length - 1; k += 1) {
+          const rating = getRandomDec(1, 10);
+          record[attributes[k]] = rating;
+          // keep track of the running total and count
+          ratingsTotal += rating;
+          ratingsCount += 1;
+        }
+
+        // find the average rating and add to the record
+        // eslint-disable-next-line no-mixed-operators
+        record['total'] = Math.round(ratingsTotal * 10 / ratingsCount) / 10;
+        record = [record];
+        console.log('record: ', record);
+        // write record to the file
+        await csvWriter.writeRecords(record)
+          .then(() => console.log(`hostel ${i} review ${j} created!`));
+      } catch (error) {
+        console.log(`an error occurred on hostel ${i}, review ${j}`, error);
       }
-
-      // find the average rating and add to the record
-      // eslint-disable-next-line no-mixed-operators
-      record['total'] = Math.round(ratingsTotal * 10 / ratingsCount) / 10;
-
-      console.log('record: ', record);
     }
   }
+  console.log(i * j, 'reviews generated');
 }
 generateReviews(1);
 
