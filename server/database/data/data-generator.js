@@ -6,14 +6,14 @@ const faker = require('faker');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const Utils = require('./data-generator-utils');
 
-const numOfHostels = 100;
-const numOfAuthors = 100;
+const numOfHostels = 10000;
+const numOfAuthors = 10000;
 
 const hostelsFilePath = './hostels.csv';
 const reviewsFilePath = './reviews.csv';
 const authorsFilePath = './authors.csv';
 
-const updateThreshold = 50;
+const updateThreshold = 5000;
 
 /* Data Generation */
 
@@ -47,7 +47,7 @@ async function generateHostels(num, callback) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  Utils.giveUpdate(count, 'author', start);
+  Utils.giveUpdate(count, 'hostel', start, 'final');
   callback();
 }
 
@@ -110,7 +110,7 @@ async function generateReviews(num, callback) {
       }
     }
   }
-  Utils.giveUpdate(count, 'review', start);
+  Utils.giveUpdate(count, 'review', start, 'final');
   callback();
 }
 
@@ -153,7 +153,7 @@ async function generateAuthors(num, callback) {
       console.log('an error occurred on record ', i, error);
     }
   }
-  Utils.giveUpdate(count, 'author', start);
+  Utils.giveUpdate(count, 'author', start, 'final');
   callback();
 }
 
@@ -162,9 +162,3 @@ generateHostels(numOfHostels, () => {
     generateAuthors(numOfAuthors, () => {});
   });
 });
-
-// make them run in order
-// add a timer:
-  // start time at the beginning of each function
-  // add time update to getUpdate
-//
