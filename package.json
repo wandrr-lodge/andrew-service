@@ -31,9 +31,9 @@
   },
   "scripts": {
     "build": "webpack -d --watch",
-    "start": "nodemon server/index.js",
-    "seed:mysql": "node server/database/mysql/mysql_seed.js",
-    "generate": "node server/database/data/data-generator.js",
+    "start": "nodemon server/server.js",
+    "seed:mysql": "node database/mysql/mysql_seed.js",
+    "generate": "node database/data/data-generator.js",
     "test": "jest"
   },
   "dependencies": {

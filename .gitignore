@@ -25,11 +25,11 @@ build/
 dist/
 
 # database config
-server/database/mysql/db_mysql_config.js
-server/database/postgres/db_postgres_config.js
+database/mysql/db_mysql_config.js
+database/postgres/db_postgres_config.js
 
 # random data files
-server/database/data/reviews.csv
-server/database/data/hostels.csv
-server/database/data/authors.csv
+database/data/reviews.csv
+database/data/hostels.csv
+database/data/authors.csv
 
