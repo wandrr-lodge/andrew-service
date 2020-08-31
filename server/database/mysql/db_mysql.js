@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const mysql = require('mysql');
-const config = require('./dbconfig');
+const config = require('./db_mysql_config');
 
 const connection = mysql.createConnection(config);
 
