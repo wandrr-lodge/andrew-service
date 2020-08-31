@@ -25,7 +25,8 @@ build/
 dist/
 
 # database config
-server/database/dbconfig.js
+server/database/mysql/db_mysql_config.js
+server/database/postgres/db_postgres_config.js
 
 # random data files
 server/database/data/reviews.csv
