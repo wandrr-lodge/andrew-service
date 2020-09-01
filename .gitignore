@@ -32,5 +32,5 @@ database/postgres/db_postgres_config.js
 database/data/reviews.csv
 database/data/hostels.csv
 database/data/authors.csv
-database/historicalData/
+database/data/historicalData/
 
