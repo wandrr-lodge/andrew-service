@@ -5,7 +5,7 @@
 const express = require('express');
 const path = require('path');
 const moment = require('moment');
-const db = require('./database/db.js');
+const db = require('../database/postgres/postgres.js');
 
 const app = express();
 
@@ -18,16 +18,15 @@ app.use(express.json());
 app.use('/hostels/:hostel_id', express.static(path.join(__dirname, '../public')));
 
 app.get('/hostels/:id/api/reviews', (req, res) => {
-  const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id WHERE reviews.hostel_id = ${req.params.id}`;
-  db.connection.query(queryStr, (err, response) => {
-    if (err) {
-      console.log(`an error occured getting all reviews for hostel id ${req.params.id}`, err);
+  db.getReviewsByHostel(req.params.id)
+    .then((rows) => {
+      console.log('query successful for hostel id', req.params.id);
+      res.status(200).send(rows);
+    })
+    .catch((error) => {
+      console.log(`an error occured getting all reviews for hostel id ${req.params.id}`, error);
       res.sendStatus(500);
-    } else {
-      console.log('query successful');
-      res.json(response);
-    }
-  });
+    });
 });
 
 app.get('/api/reviews/:id', (req, res) => {
