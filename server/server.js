@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 /* eslint-disable no-restricted-syntax */
+require('newrelic');
 const express = require('express');
 const path = require('path');
 const db = require('../database/postgres/postgres.js');
@@ -19,6 +20,7 @@ app.use('/hostels/:hostel_id', express.static(path.join(__dirname, '../public'))
 app.get('/hostels/:id/api/reviews', (req, res) => {
   db.getReviewsByHostel(req.params.id)
     .then((rows) => {
+      // console.log('rows:', typeof rows[0].security);
       console.log('query successful for hostel id', req.params.id);
       res.status(200).send(rows);
     })
@@ -112,7 +114,7 @@ app.put('/api/reviews/:id', (req, res) => {
 
 app.delete('/api/reviews/:id', (req, res) => {
   db.deleteReview(req.params.id)
-    .then((rowCount) => res.send(`${rowCount} review deleted`))
+    .then((rowCount) => res.send(`${rowCount} review deleted.`))
     .catch(() => res.sendStatus(500));
 });
 
