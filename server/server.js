@@ -4,7 +4,6 @@
 /* eslint-disable no-restricted-syntax */
 const express = require('express');
 const path = require('path');
-const moment = require('moment');
 const db = require('../database/postgres/postgres.js');
 
 const app = express();
@@ -30,16 +29,15 @@ app.get('/hostels/:id/api/reviews', (req, res) => {
 });
 
 app.get('/api/reviews/:id', (req, res) => {
-  const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id WHERE reviews.id = ${req.params.id}`;
-  db.connection.query(queryStr, (err, response) => {
-    if (err) {
-      console.log(`an error occured getting review id ${req.params.id}`, err);
+  db.getReviewsById(req.params.id)
+    .then((rows) => {
+      console.log('query successful for review id', req.params.id);
+      res.status(200).send(rows);
+    })
+    .catch((error) => {
+      console.log(`an error occured getting all reviews for hostel id ${req.params.id}`, error);
       res.sendStatus(500);
-    } else {
-      console.log('query successful');
-      res.json(response);
-    }
-  });
+    });
 });
 
 app.post('/api/reviews', (req, res) => {
@@ -76,27 +74,15 @@ app.post('/api/reviews', (req, res) => {
   }
 
   if (!aPropIsMissing) {
-    const {
-      hostel_id, author_id, description, security, location,
-      staff, atmosphere, cleanliness, facilities, value, total,
-    } = req.body;
-
-    // get the current timestamp and format it
-    const timestamp = Date.now();
-    let created_at = new Date(timestamp);
-    created_at = moment(created_at).format('YYYY-MM-DD');
-
-    const queryStr = `INSERT INTO reviews (hostel_id, author_id, description, security, location, staff, atmosphere, cleanliness, facilities, value, total, created_at) VALUES ("${hostel_id}", "${author_id}", "${description}", "${security}", "${location}", "${staff}", "${atmosphere}", "${cleanliness}", "${facilities}", "${value}", "${total}", "${created_at}")`;
-
     // query the database
-    db.connection.query(queryStr, (err, result) => {
-      if (err) {
-        console.log('error in post request: ', err);
+    db.createReview(req.body)
+      .then((rowCount) => {
+        res.status(201).send(`${rowCount} review successfully created!`);
+      })
+      .catch((error) => {
+        console.log('error in post request: ', error);
         res.sendStatus(500);
-      } else if (result) {
-        res.status(201).send(`Review successfully created! ID: ${result.insertId}`);
-      }
-    });
+      });
   }
 });
 
@@ -116,24 +102,17 @@ app.put('/api/reviews/:id', (req, res) => {
   columns = columns.slice(0, -1);
 
   // query the database
-  const queryStr = `UPDATE reviews SET ${columns}
-  WHERE id=${req.params.id}`;
-  db.connection.query(queryStr, (err, result) => {
-    if (err) {
-      console.log('an error occurred in the put request: ', err);
-      res.sendStatus(500);
-    } else if (result) {
-      res.sendStatus(200);
-    }
-  });
+  db.updateReview(columns, req.params.id)
+    .then(() => res.sendStatus(200))
+    .catch((error) => {
+      console.log('an error occurred in the put request: ', error);
+    });
 });
 
 app.delete('/api/reviews/:id', (req, res) => {
-  db.deleteReview(req.params.id, (err, result) => {
-    if (err) {
-      res.sendStatus(500);
-    } else if (result) { res.send(result); }
-  });
+  db.deleteReview(req.params.id)
+    .then((result) => res.send(result))
+    .catch(() => res.sendStatus(500));
 });
 
 app.listen(3001, () => console.log('listening on 3001'));
