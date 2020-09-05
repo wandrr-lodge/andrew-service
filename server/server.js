@@ -90,7 +90,7 @@ app.put('/api/reviews/:id', (req, res) => {
   // construct the list of columns and values to update
   let columns = '';
   for (const property in req.body) {
-    columns += `${property}="${req.body[property]}",`;
+    columns += `${property}='${req.body[property]}',`;
   }
 
   // check if data was provided in the req
@@ -106,12 +106,13 @@ app.put('/api/reviews/:id', (req, res) => {
     .then(() => res.sendStatus(200))
     .catch((error) => {
       console.log('an error occurred in the put request: ', error);
+      res.sendStatus(500);
     });
 });
 
 app.delete('/api/reviews/:id', (req, res) => {
   db.deleteReview(req.params.id)
-    .then((result) => res.send(result))
+    .then((rowCount) => res.send(`${rowCount} review deleted`))
     .catch(() => res.sendStatus(500));
 });
 

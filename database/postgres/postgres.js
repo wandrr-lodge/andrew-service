@@ -36,7 +36,7 @@ const getReviewsById = async (id) => {
 
 const createReview = async (body) => {
   const {
-    review_id, hostel_id, author_id, description, security, location,
+    hostel_id, author_id, description, security, location,
     staff, atmosphere, cleanliness, facilities, value, total,
   } = body;
 
@@ -45,29 +45,26 @@ const createReview = async (body) => {
   let createdAt = new Date(timestamp);
   createdAt = moment(createdAt).format('YYYY-MM-DD');
 
-  const queryStr = `INSERT INTO reviews (review_id, hostel_id, author_id, description, date, security, location, staff, atmosphere, cleanliness, facilities, value, total) VALUES (${review_id}, ${hostel_id}, ${author_id}, '${description}', '${createdAt}', ${security}, ${location}, ${staff}, ${atmosphere}, ${cleanliness}, ${facilities}, ${value}, ${total})`;
+  const queryStr = `INSERT INTO reviews (hostel_id, author_id, description, date, security, location, staff, atmosphere, cleanliness, facilities, value, total) VALUES (${hostel_id}, ${author_id}, '${description}', '${createdAt}', ${security}, ${location}, ${staff}, ${atmosphere}, ${cleanliness}, ${facilities}, ${value}, ${total})`;
 
   const res = await client.query(queryStr);
 
-  console.log('res:', res);
   return res.rowCount;
 };
 
 const updateReview = async (columns, id) => {
   const queryStr = `UPDATE reviews SET ${columns}
-  WHERE id=${id}`;
+  WHERE review_id=${id}`;
 
   const res = await client.query(queryStr);
-  console.log('put response:', res);
   return res;
 };
 
 const deleteReview = async (id) => {
-  const queryStr = `DELETE FROM reviews WHERE id=${id}`;
+  const queryStr = `DELETE FROM reviews WHERE review_id=${id}`;
 
   const res = await client.query(queryStr);
-  console.log('delete response:', res);
-  return res;
+  return res.rowCount;
 };
 
 // const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id
