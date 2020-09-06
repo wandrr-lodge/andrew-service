@@ -45,7 +45,6 @@ class App extends React.Component {
     };
   }
 
-  //
   setAverages(data) {
     const averages = {};
     let word = 'Review';
@@ -88,7 +87,7 @@ class App extends React.Component {
 
   // copies the first four reviews in the array
   getTop(data) {
-    const top = [data[1], data[2], data[3], data[4]];
+    const top = data.slice(0,4);
     this.setState({
       topfour: top,
     });
@@ -99,7 +98,6 @@ class App extends React.Component {
       if (err) {
         console.log('ERROR IN GET, CLIENT ', err);
       } else {
-        // console.log('componentDidMount: ', res.data);
         this.setState({
           reviews: res.data,
           mounted: true,
