@@ -34,3 +34,5 @@ database/data/hostels.csv
 database/data/authors.csv
 database/data/historicalData/
 
+#New Relic
+newrelic*
