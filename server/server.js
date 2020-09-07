@@ -15,6 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use('/', express.static(path.join(__dirname, '../public')));
 app.use('/hostels/:hostel_id', express.static(path.join(__dirname, '../public')));
 
 app.get('/hostels/:id/api/reviews', (req, res) => {
