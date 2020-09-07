@@ -1,0 +1,55 @@
+const maxVU = 1;
+
+config:
+  target: http://localhost:3001
+  http:
+    pool: 10
+  phases:
+    - duration: 30
+      arrivalRate: 1
+      name: "Getting Started"
+    - duration: 60
+      arrivalRate: 1
+      rampTo: maxVU
+      name: "Warm Up"
+    - duration: 120
+      arrivalRate: maxVU
+      name: "Sustained Max Load"
+  scenarios:
+    - flow:
+      - get:
+          url: "hostels/5000000/api/reviews"
+      - think: 5
+      - get:
+          url: "hostels/9000000/api/reviews"
+    - name: "Browse hostels"
+
+
+# phases: warm up: 30 seconds
+# ramp up: 30 seconds
+# max load: 2 minutes
+
+# Route 1: Browsing: each user queries a random hostel, spends between 10 second & 30 seconds on the hostel, then queries another one. Does this 2-3 times
+
+# Route 2: Get request for reviews by id
+  # 30 seconds: ramp up
+  # each user queries random
+
+# Route 3: Post request
+  # I'll need to generate some random review data
+  # Each user posts a review
+
+# Optional tests:
+# Route 4: Put request
+  # pick a random review and change the description to something short
+
+ # Route 6: Post a review of hostels you just visited:
+  # each user queries the reviews for a hostel
+  # then quickly posts a new review about that hostel
+  # After each review, they have a 25% change to update a previous review.
+  # Does this 1 - 5 times.
+
+# Route 7: Change your mind
+  # each user posts a new review, then updates it, then quickly deletes it
+
+# Route 8: Combined test of all routes, each user chooses a random route
