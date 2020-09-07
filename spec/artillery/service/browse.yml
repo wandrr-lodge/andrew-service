@@ -1,6 +1,11 @@
 ---
+variables:
+  - maxVU: &maxVU 1
+  - idWeight: .8
+  - maxRecords: 10000000
 config:
   target: http://localhost:3001
+  processor: "../functions.js"
   http:
     pool: 10
   phases:
@@ -9,16 +14,17 @@ config:
       name: "Getting Started"
     - duration: 30
       arrivalRate: 1
-      rampTo: 1
+      rampTo: *maxVU
       name: "Warm Up"
     - duration: 120
-      arrivalRate: 1
+      arrivalRate: *maxVU
       name: "Sustained Max Load"
 scenarios:
   - name: "Browse"
     flow:
+      - function: "getWeightedId"
       - get:
-          url: "/hostels/5000000/api/reviews"
+          url: "/hostels/{{ hostelId }}/api/reviews"
 
 
 # phases: warm up: 30 seconds
