@@ -1,5 +1,4 @@
-const maxVU = 1;
-
+---
 config:
   target: http://localhost:3001
   http:
@@ -8,21 +7,18 @@ config:
     - duration: 30
       arrivalRate: 1
       name: "Getting Started"
-    - duration: 60
+    - duration: 30
       arrivalRate: 1
-      rampTo: maxVU
+      rampTo: 1
       name: "Warm Up"
     - duration: 120
-      arrivalRate: maxVU
+      arrivalRate: 1
       name: "Sustained Max Load"
-  scenarios:
-    - flow:
+scenarios:
+  - name: "Browse"
+    flow:
       - get:
-          url: "hostels/5000000/api/reviews"
-      - think: 5
-      - get:
-          url: "hostels/9000000/api/reviews"
-    - name: "Browse hostels"
+          url: "/hostels/5000000/api/reviews"
 
 
 # phases: warm up: 30 seconds
