@@ -36,3 +36,6 @@ database/data/historicalData/
 
 #New Relic
 newrelic*
+
+#AWS Keys
+aws*
