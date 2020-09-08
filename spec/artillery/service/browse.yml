@@ -1,8 +1,6 @@
 ---
 variables:
-  - maxVU: &maxVU 1
-  - idWeight: .8
-  - maxRecords: 10000000
+  - maxVU: &maxVU 10
 config:
   target: http://localhost:3001
   processor: "../functions.js"
