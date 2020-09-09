@@ -5,13 +5,13 @@ CREATE DATABASE reviewservice;
 
 DROP TABLE IF EXISTS hostels;
 CREATE TABLE hostels (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   hostel_name VARCHAR(30) UNIQUE
 );
 
 DROP TABLE IF EXISTS authors;
 CREATE TABLE authors (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   authdescription VARCHAR(64),
   name VARCHAR(64),
   gender VARCHAR(10),
@@ -20,7 +20,7 @@ CREATE TABLE authors (
 
 DROP TABLE IF EXISTS reviews;
 CREATE TABLE reviews (
-  review_id INTEGER PRIMARY KEY,
+  review_id SERIAL PRIMARY KEY,
   hostel_id INTEGER NOT NULL,
   author_id INTEGER NOT NULL,
   description VARCHAR(500),
