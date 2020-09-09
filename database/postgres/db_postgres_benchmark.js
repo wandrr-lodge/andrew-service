@@ -21,10 +21,10 @@ if (!sameRecord) {
 }
 
 if (!joinedQuery) {
-  query = `SELECT * FROM reviews WHERE review_id=${reviewID}`;
+  query = 'SELECT * FROM reviews WHERE review_id=$1';
 } else {
   query = `SELECT * FROM reviews, authors, hostels
-  WHERE reviews.review_id=${reviewID}
+  WHERE reviews.review_id=$1
   AND reviews.author_id = authors.id
   AND reviews.hostel_id = hostels.id`;
 }
@@ -34,7 +34,7 @@ if (!joinedQuery) {
   const start = Date.now();
   await client.connect();
 
-  const res = await client.query(query);
+  const res = await client.query(query, [reviewID]);
   // stop timer
   const end = Date.now();
 
