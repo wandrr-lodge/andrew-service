@@ -70,18 +70,6 @@ const deleteReview = async (id) => {
   return res.rowCount;
 };
 
-// const queryStr = `SELECT * FROM reviews INNER JOIN authors ON reviews.author_id = authors.id
-// WHERE reviews.hostel_id = ${id}`;
-
-// await client.end();
-
-
-// post a new review
-
-// update a review by id
-
-// delete a review
-
 module.exports = {
   getReviewsByHostel,
   getReviewsById,
