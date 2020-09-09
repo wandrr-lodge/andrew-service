@@ -31,9 +31,9 @@
   },
   "scripts": {
     "build": "webpack -d --watch",
-    "start": "nodemon server/index.js",
-    "seed": "node server/database/seed.js",
-    "generate": "node server/database/data/data-generator.js",
+    "start": "nodemon server/server.js",
+    "seed:mysql": "node database/mysql/mysql_seed.js",
+    "generate": "node database/data/data-generator.js",
     "test": "jest"
   },
   "dependencies": {
@@ -50,6 +50,7 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
+    "pg": "^8.3.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-svg-loader": "^3.0.3"
@@ -58,6 +59,7 @@
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "artillery": "^1.6.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.2.1",
     "enzyme": "^3.11.0",
@@ -70,6 +72,7 @@
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
     "lorem-ipsum": "^2.0.3",
+    "newrelic": "^6.13.0",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"

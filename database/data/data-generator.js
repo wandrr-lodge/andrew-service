@@ -7,14 +7,14 @@ const path = require('path');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const Utils = require('./data-generator-utils');
 
-const numOfHostels = 100;
-const numOfAuthors = 100;
+const numOfHostels = 100000;
+const numOfAuthors = 5000;
 
 const hostelsFilePath = path.resolve(__dirname, 'hostels.csv');
 const reviewsFilePath = path.resolve(__dirname, 'reviews.csv');
 const authorsFilePath = path.resolve(__dirname, 'authors.csv');
 
-const updateThreshold = 5000;
+const updateThreshold = 50000;
 
 /* Data Generation */
 
