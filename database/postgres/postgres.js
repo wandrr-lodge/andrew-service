@@ -45,10 +45,10 @@ const createReview = async (body) => {
   let createdAt = new Date(timestamp);
   createdAt = moment(createdAt).format('YYYY-MM-DD');
 
-  const queryStr = 'INSERT INTO reviews (hostel_id, author_id, description, date, security, location, staff, atmosphere, cleanliness, facilities, value, total) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)';
+  const queryStr = 'INSERT INTO reviews (hostel_id, author_id, description, date, security, location, staff, atmosphere, cleanliness, facilities, value, total) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)';
 
-  const params = [hostel_id, author_id, description, security, location,
-    staff, atmosphere, cleanliness, facilities, value, total];
+  const params = [hostel_id, author_id, description, createdAt, security,
+    location, staff, atmosphere, cleanliness, facilities, value, total];
 
   const res = await client.query(queryStr, params);
 
