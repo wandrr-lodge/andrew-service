@@ -33,17 +33,17 @@ CREATE TABLE reviews (
 );
 
 COPY hostels
-FROM '/home/ubuntu/hostels_1000.csv'
+FROM '/home/ubuntu/hostels.csv'
 DELIMITER ','
 CSV HEADER;
 
 COPY authors
-FROM '/home/ubuntu/authors_50.csv'
+FROM '/home/ubuntu/authors.csv'
 DELIMITER ','
 CSV HEADER;
 
 COPY reviews
-FROM '/home/ubuntu/reviews_5048.csv'
+FROM '/home/ubuntu/reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
