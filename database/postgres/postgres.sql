@@ -12,10 +12,10 @@ CREATE TABLE hostels (
 DROP TABLE IF EXISTS authors;
 CREATE TABLE authors (
   id SERIAL PRIMARY KEY,
-  authdescription VARCHAR(64),
   name VARCHAR(64),
+  age_group VARCHAR(64),
   gender VARCHAR(10),
-  age_group VARCHAR(64)
+  authdescription VARCHAR(64)
 );
 
 DROP TABLE IF EXISTS reviews;
@@ -38,16 +38,16 @@ CREATE TABLE reviews (
 );
 
 COPY hostels
-FROM '/Users/andrew/Documents/HackReactor/SDC/Reviews-Service/database/data/hostels.csv'
+FROM '/home/ubuntu/hostels_1000.csv'
 DELIMITER ','
 CSV HEADER;
 
 COPY authors
-FROM '/Users/andrew/Documents/HackReactor/SDC/Reviews-Service/database/data/authors.csv'
+FROM '/home/ubuntu/authors_50.csv'
 DELIMITER ','
 CSV HEADER;
 
 COPY reviews
-FROM '/Users/andrew/Documents/HackReactor/SDC/Reviews-Service/database/data/reviews.csv'
+FROM '/home/ubuntu/reviews_5048.csv'
 DELIMITER ','
 CSV HEADER;
