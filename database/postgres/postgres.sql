@@ -29,7 +29,7 @@ CREATE TABLE reviews (
   cleanliness FLOAT(1) NOT NULL,
   facilities FLOAT(1) NOT NULL,
   value FLOAT(1) NOT NULL,
-  total FLOAT(1) NOT NULL,
+  total FLOAT(1) NOT NULL
 );
 
 COPY hostels
@@ -50,7 +50,7 @@ CSV HEADER;
 
 SELECT setval(pg_get_serial_sequence('authors', 'id'), coalesce(max(id),0) + 1, false) FROM authors;
 SELECT setval(pg_get_serial_sequence('hostels', 'id'), coalesce(max(id),0) + 1, false) FROM hostels;
-SELECT setval(pg_get_serial_sequence('reviews', 'reviews_id'), coalesce(max(id),0) + 1, false) FROM reviews;
+SELECT setval(pg_get_serial_sequence('reviews', 'review_id'), coalesce(max(review_id),0) + 1, false) FROM reviews;
 
 ALTER TABLE reviews
 ADD CONSTRAINT reviews_hostel_id_fkey
@@ -63,3 +63,5 @@ ADD CONSTRAINT reviews_author_id_fkey
 FOREIGN KEY (author_id)
 REFERENCES authors(id)
 ON DELETE CASCADE;
+
+CREATE INDEX hostel_id_index ON reviews (hostel_id);
