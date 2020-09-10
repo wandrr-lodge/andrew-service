@@ -3,13 +3,11 @@ DROP DATABASE IF EXISTS reviewservice;
 CREATE DATABASE reviewservice;
 \c reviewservice;
 
-DROP TABLE IF EXISTS hostels;
 CREATE TABLE hostels (
   id SERIAL PRIMARY KEY,
-  hostel_name VARCHAR(30) UNIQUE
+  hostel_name VARCHAR(30)
 );
 
-DROP TABLE IF EXISTS authors;
 CREATE TABLE authors (
   id SERIAL PRIMARY KEY,
   name VARCHAR(64),
@@ -18,7 +16,6 @@ CREATE TABLE authors (
   authdescription VARCHAR(64)
 );
 
-DROP TABLE IF EXISTS reviews;
 CREATE TABLE reviews (
   review_id SERIAL PRIMARY KEY,
   hostel_id INTEGER NOT NULL,
@@ -33,8 +30,6 @@ CREATE TABLE reviews (
   facilities FLOAT(1) NOT NULL,
   value FLOAT(1) NOT NULL,
   total FLOAT(1) NOT NULL,
-  FOREIGN KEY (hostel_id) REFERENCES hostels(id),
-  FOREIGN KEY (author_id) REFERENCES authors(id)
 );
 
 COPY hostels
@@ -51,3 +46,20 @@ COPY reviews
 FROM '/home/ubuntu/reviews_5048.csv'
 DELIMITER ','
 CSV HEADER;
+
+
+SELECT setval(pg_get_serial_sequence('authors', 'id'), coalesce(max(id),0) + 1, false) FROM authors;
+SELECT setval(pg_get_serial_sequence('hostels', 'id'), coalesce(max(id),0) + 1, false) FROM hostels;
+SELECT setval(pg_get_serial_sequence('reviews', 'reviews_id'), coalesce(max(id),0) + 1, false) FROM reviews;
+
+ALTER TABLE reviews
+ADD CONSTRAINT reviews_hostel_id_fkey
+FOREIGN KEY (hostel_id)
+REFERENCES hostels(id)
+ON DELETE CASCADE;
+
+ALTER TABLE reviews
+ADD CONSTRAINT reviews_author_id_fkey
+FOREIGN KEY (author_id)
+REFERENCES authors(id)
+ON DELETE CASCADE;
