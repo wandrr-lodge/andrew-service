@@ -32,10 +32,9 @@
   "scripts": {
     "build": "webpack -d",
     "build-dev": "webpack -d --watch",
-    "start": "node server/server.js",
-    "start-pm2": "pm2 start server/server.js --watch",
-    "stop-pm2": "pm2 stop server/server.js",
-    "restart-pm2": "pm2 restart server/server.js --watch",
+    "start": "pm2 start server/server.js --watch",
+    "stop": "pm2 stop server/server.js",
+    "restart": "pm2 restart server/server.js --watch",
     "start-dev": "nodemon server/server.js",
     "seed:mysql": "node database/mysql/mysql_seed.js",
     "generate": "node database/data/data-generator.js",
