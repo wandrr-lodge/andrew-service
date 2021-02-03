@@ -14,7 +14,7 @@ const client = new Client({
 (async () => {
   await client.connect()
     .then(() => console.log('database connected!'))
-    .catch((error) => console.log('error connecting to the database:', error));
+    .catch((error) => console.log('error connecting to the database:', error))
 })();
 
 // get all reviews by hostel name, joined with authors and hostels
@@ -39,9 +39,9 @@ const getReviewsById = async (id) => {
   return res.rows;
 };
 
-const createReview = async (body) => {
+const createReview = async (hostel_id, body) => {
   const {
-    hostel_id, author_id, description, security, location,
+    author_id, description, security, location,
     staff, atmosphere, cleanliness, facilities, value, total,
   } = body;
 
