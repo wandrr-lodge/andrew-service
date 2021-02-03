@@ -42,3 +42,6 @@ aws*
 
 # Loader IO
 loaderio*
+
+#env
+.env

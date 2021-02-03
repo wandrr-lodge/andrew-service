@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-restricted-syntax */
 require('newrelic');
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const db = require('../database/postgres/postgres.js');
@@ -119,4 +120,4 @@ app.delete('/api/reviews/:id', (req, res) => {
     .catch(() => res.sendStatus(500));
 });
 
-app.listen(3001, () => console.log('listening on 3001'));
+app.listen(process.env.SERVER_PORT, () => console.log('listening on 3001'));

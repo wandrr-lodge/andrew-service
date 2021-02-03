@@ -2,9 +2,14 @@
 /* eslint-disable no-console */
 const { Client } = require('pg');
 const moment = require('moment');
-const config = require('./db_postgres_config');
 
-const client = new Client(config);
+const client = new Client({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT,
+});
 
 (async () => {
   await client.connect()
