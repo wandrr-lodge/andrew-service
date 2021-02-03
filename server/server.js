@@ -107,4 +107,4 @@ app.delete('/api/reviews/:id', (req, res) => {
     .catch(() => res.sendStatus(500));
 });
 
-app.listen(process.env.SERVER_PORT, () => console.log('listening on 3001'));
+app.listen(process.env.SERVER_PORT, () => console.log('listening on', process.env.SERVER_PORT));
