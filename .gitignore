@@ -28,7 +28,7 @@ dist/
 database/mysql/db_mysql_config.js
 database/postgres/db_postgres_config.js
 
-# random data files
+# data files
 database/data/reviews.csv
 database/data/hostels.csv
 database/data/authors.csv
@@ -39,3 +39,9 @@ newrelic*
 
 #AWS Keys
 aws*
+
+# Loader IO
+loaderio*
+
+#env
+.env

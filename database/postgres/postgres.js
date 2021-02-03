@@ -2,14 +2,19 @@
 /* eslint-disable no-console */
 const { Client } = require('pg');
 const moment = require('moment');
-const config = require('./db_postgres_config');
 
-const client = new Client(config);
+const client = new Client({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT,
+});
 
 (async () => {
   await client.connect()
     .then(() => console.log('database connected!'))
-    .catch((error) => console.log('error connecting to the database:', error));
+    .catch((error) => console.log('error connecting to the database:', error))
 })();
 
 // get all reviews by hostel name, joined with authors and hostels
@@ -34,9 +39,9 @@ const getReviewsById = async (id) => {
   return res.rows;
 };
 
-const createReview = async (body) => {
+const createReview = async (hostel_id, body) => {
   const {
-    hostel_id, author_id, description, security, location,
+    author_id, description, security, location,
     staff, atmosphere, cleanliness, facilities, value, total,
   } = body;
 
