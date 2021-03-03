@@ -1,4 +1,4 @@
-# HostileWorld Reviews Component
+# Wandrr Reviews Component
 
 Contains a fullstack React module with components for displaying a hostel's reviews.
 
